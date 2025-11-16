@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, ArrowLeft } from "lucide-react";
+import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, ArrowLeft, ArrowUp } from "lucide-react";
 import { articles } from "@/data/articles";
 import logo from "@/assets/fundfixers-new-logo.png";
 import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
@@ -566,6 +566,15 @@ const Index = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Back to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed left-6 bottom-6 z-50 w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+        aria-label="Back to top"
+      >
+        <ArrowUp className="w-5 h-5 group-hover:animate-bounce" />
+      </button>
     </div>;
 };
 export default Index;
