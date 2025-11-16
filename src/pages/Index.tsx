@@ -30,7 +30,8 @@ const Index = () => {
       [e.target.name]: e.target.value
     });
   };
-  return <div className="min-h-screen bg-background font-cairo">
+  return (
+    <div className="min-h-screen bg-background font-cairo">
       {/* Header Navigation */}
       <header className="border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-7xl mx-auto px-4 py-4">
@@ -48,7 +49,7 @@ const Index = () => {
             <div className="space-y-8 lg:pt-12">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="text-primary">منصة استرداد</span>
-                <br className="text-[#1a80fc]" />
+                <br />
                 <span className="text-foreground">الخسائر المالية العالمية</span>
               </h1>
 
@@ -57,7 +58,7 @@ const Index = () => {
               </p>
 
               <div className="space-y-3 p-6 rounded-lg bg-secondary/30 border border-border/30">
-                <p className="font-semibold text-primary text-lg bg-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
+                <p className="font-semibold text-primary text-lg">الهيئة الاستثمارية العالمية</p>
                 <p className="text-foreground/90">المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
                 <p className="text-muted-foreground text-sm">
                   King Charles St, London SW1A 2AH, United Kingdom
@@ -82,38 +83,83 @@ const Index = () => {
                     <label htmlFor="fullName" className="block text-card-foreground font-semibold text-right text-sm">
                       الاسم الكامل *
                     </label>
-                    <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل اسمك الكامل" />
+                    <Input 
+                      id="fullName" 
+                      name="fullName" 
+                      value={formData.fullName} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل اسمك الكامل" 
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="phone" className="block text-card-foreground font-semibold text-right text-sm">
                       رقم الجوال *
                     </label>
-                    <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل رقم الجوال" />
+                    <Input 
+                      id="phone" 
+                      name="phone" 
+                      type="tel" 
+                      value={formData.phone} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل رقم الجوال" 
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="country" className="block text-card-foreground font-semibold text-right text-sm">
                       الدولة *
                     </label>
-                    <Input id="country" name="country" value={formData.country} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل اسم الدولة" />
+                    <Input 
+                      id="country" 
+                      name="country" 
+                      value={formData.country} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل اسم الدولة" 
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="email" className="block text-card-foreground font-semibold text-right text-sm">
                       البريد الإلكتروني *
                     </label>
-                    <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل البريد الإلكتروني" />
+                    <Input 
+                      id="email" 
+                      name="email" 
+                      type="email" 
+                      value={formData.email} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل البريد الإلكتروني" 
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <label htmlFor="description" className="block text-card-foreground font-semibold text-right text-sm">
                       وصف الطلب او الحالة *
                     </label>
-                    <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required className="w-full min-h-[120px] text-right border-input/50 focus:border-primary transition-colors" placeholder="اشرح حالتك بالتفصيل" />
+                    <Textarea 
+                      id="description" 
+                      name="description" 
+                      value={formData.description} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full min-h-[120px] text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="اشرح حالتك بالتفصيل" 
+                    />
                   </div>
 
-                  <Button type="submit" className="w-full text-primary-foreground font-bold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300 bg-[#1a80fc]">
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
                     إرسال الطلب
                   </Button>
                 </form>
@@ -131,6 +177,7 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
 export default Index;
