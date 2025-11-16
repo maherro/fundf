@@ -52,7 +52,8 @@ const Index = () => {
                 <span className="text-foreground">الخسائر المالية العالمية</span>
               </h1>
 
-              <p className="text-foreground/90 text-lg md:text-xl leading-relaxed max-w-2xl">نحن مرخصون من قبل الهيئة الاستثمارية العالمية، لنا صلاحية بكل ما يتعلق بالضرائب المحلية والعالمية والقوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.</p>
+              <p className="text-foreground/90 text-lg md:text-xl leading-relaxed max-w-2xl">نحن مرخصون من قبل الهيئة الاستثمارية العالمية،
+لنا صلاحية بكل ما يتعلق بالضرائب المحلية والعالمية والقوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.</p>
 
               <div className="space-y-3 p-6 rounded-lg bg-secondary/30 border border-border/30">
                 <p className="font-semibold text-primary text-lg">الهيئة الاستثمارية العالمية</p>
