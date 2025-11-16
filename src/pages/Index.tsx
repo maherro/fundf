@@ -13,23 +13,6 @@ const Index = () => {
     email: "",
     description: ""
   });
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsHeaderVisible(false);
-      } else {
-        setIsHeaderVisible(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
-    window.addEventListener("scroll", handleScroll, {
-      passive: true
-    });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("تم إرسال الطلب بنجاح");
@@ -49,7 +32,7 @@ const Index = () => {
   };
   return <div className="min-h-screen bg-background font-cairo">
       {/* Fixed Header Section */}
-      <header className={`fixed top-0 left-0 right-0 bg-background py-6 px-4 z-50 transition-transform duration-300 border-b border-border/50 ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}>
+      <header className="sticky top-0 left-0 right-0 bg-[#1a2332] py-6 px-4 z-50 border-b border-border/50">
         <div className="container max-w-4xl mx-auto text-center">
           <img src={logo} alt="FundFixers Logo" className="mx-auto h-16 w-auto" />
         </div>
