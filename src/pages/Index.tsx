@@ -35,8 +35,8 @@ const Index = () => {
       {/* Header Navigation */}
       <header className="sticky top-0 z-50 border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <img src={logo} alt="FundFixers Logo" className="h-20 w-auto" />
+          <div className="flex items-center justify-center">
+            <img src={logo} alt="FundFixers Logo" className="h-18 w-auto" />
           </div>
         </div>
       </header>
