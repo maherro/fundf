@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import logo from "@/assets/fundfixers-logo.png";
+import logo from "@/assets/fundfixers-new-logo.png";
 const Index = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,10 +33,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background font-cairo">
       {/* Header Navigation */}
-      <header className="border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <img src={logo} alt="FundFixers Logo" className="h-16 w-auto" />
+            <img src={logo} alt="FundFixers Logo" className="h-20 w-auto" />
           </div>
         </div>
       </header>
