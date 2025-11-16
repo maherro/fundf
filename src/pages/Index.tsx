@@ -5,36 +5,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-logo.png";
-
 const Index = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     country: "",
     email: "",
-    description: "",
+    description: ""
   });
-
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsHeaderVisible(false);
       } else {
         setIsHeaderVisible(true);
       }
-      
       setLastScrollY(currentScrollY);
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, {
+      passive: true
+    });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success("تم إرسال الطلب بنجاح");
@@ -43,33 +38,20 @@ const Index = () => {
       phone: "",
       country: "",
       email: "",
-      description: "",
+      description: ""
     });
   };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
-
-  return (
-    <div className="min-h-screen bg-background font-cairo">
+  return <div className="min-h-screen bg-background font-cairo">
       {/* Fixed Header Section */}
-      <header 
-        className={`fixed top-0 left-0 right-0 bg-background py-6 px-4 z-50 transition-transform duration-300 border-b border-border/50 ${
-          isHeaderVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
+      <header className={`fixed top-0 left-0 right-0 bg-background py-6 px-4 z-50 transition-transform duration-300 border-b border-border/50 ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="container max-w-4xl mx-auto text-center">
-          <img
-            src={logo}
-            alt="FundFixers Logo"
-            className="mx-auto h-16 w-auto"
-          />
+          <img src={logo} alt="FundFixers Logo" className="mx-auto h-16 w-auto" />
         </div>
       </header>
 
@@ -79,11 +61,7 @@ const Index = () => {
       {/* Hero Section */}
       <section className="py-12 px-4">
         <div className="container max-w-4xl mx-auto text-center">
-          <img
-            src={logo}
-            alt="FundFixers Logo"
-            className="mx-auto mb-8 max-w-md w-full h-auto"
-          />
+          
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             منصة استرداد الخسائر المالية العالمية
           </h1>
@@ -118,101 +96,41 @@ const Index = () => {
         <Card className="p-8 md:p-12 bg-card shadow-xl">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label
-                htmlFor="fullName"
-                className="block text-card-foreground font-semibold text-right"
-              >
+              <label htmlFor="fullName" className="block text-card-foreground font-semibold text-right">
                 الاسم الكامل
               </label>
-              <Input
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                required
-                className="w-full text-right"
-                placeholder="أدخل اسمك الكامل"
-              />
+              <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full text-right" placeholder="أدخل اسمك الكامل" />
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="phone"
-                className="block text-card-foreground font-semibold text-right"
-              >
+              <label htmlFor="phone" className="block text-card-foreground font-semibold text-right">
                 رقم الجوال
               </label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="w-full text-right"
-                placeholder="أدخل رقم الجوال"
-              />
+              <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full text-right" placeholder="أدخل رقم الجوال" />
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="country"
-                className="block text-card-foreground font-semibold text-right"
-              >
+              <label htmlFor="country" className="block text-card-foreground font-semibold text-right">
                 الدولة
               </label>
-              <Input
-                id="country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                required
-                className="w-full text-right"
-                placeholder="أدخل اسم الدولة"
-              />
+              <Input id="country" name="country" value={formData.country} onChange={handleChange} required className="w-full text-right" placeholder="أدخل اسم الدولة" />
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="block text-card-foreground font-semibold text-right"
-              >
+              <label htmlFor="email" className="block text-card-foreground font-semibold text-right">
                 البريد الإلكتروني
               </label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full text-right"
-                placeholder="أدخل البريد الإلكتروني"
-              />
+              <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full text-right" placeholder="أدخل البريد الإلكتروني" />
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="description"
-                className="block text-card-foreground font-semibold text-right"
-              >
+              <label htmlFor="description" className="block text-card-foreground font-semibold text-right">
                 وصف الطلب او الحالة
               </label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                className="w-full min-h-[150px] text-right"
-                placeholder="اشرح حالتك بالتفصيل"
-              />
+              <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required className="w-full min-h-[150px] text-right" placeholder="اشرح حالتك بالتفصيل" />
             </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl py-6"
-            >
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl py-6">
               إرسال الطلب
             </Button>
           </form>
@@ -225,8 +143,6 @@ const Index = () => {
           FundFixers © جميع الحقوق محفوظة
         </p>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
