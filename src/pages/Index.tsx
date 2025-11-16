@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { FileText, Search, Scale, HandshakeIcon, CheckCircle2 } from "lucide-react";
+import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal } from "lucide-react";
 import logo from "@/assets/fundfixers-new-logo.png";
 import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
 import withdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
@@ -173,6 +173,116 @@ const Index = () => {
             <CarouselPrevious className="hidden md:flex" />
             <CarouselNext className="hidden md:flex" />
           </Carousel>
+        </div>
+      </section>
+
+      {/* Types of Scams Section */}
+      <section className="py-20 px-4 bg-secondary/30">
+        <div className="container max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
+            أنواع الاحتيال التي نساعدك في استرداد أموالك منها
+          </h2>
+          <p className="text-center text-muted-foreground text-lg mb-12 max-w-3xl mx-auto">
+            نتعامل مع جميع أنواع عمليات النصب والاحتيال المالي
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {/* Binary Options */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <CandlestickChart className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">الخيارات الثنائية</h3>
+              </div>
+            </Card>
+
+            {/* Digital Currency */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Bitcoin className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">العملات الرقمية</h3>
+              </div>
+            </Card>
+
+            {/* Forex */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <DollarSign className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">الفوركس</h3>
+              </div>
+            </Card>
+
+            {/* Romance Scams */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <HeartCrack className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">النصب العاطفي</h3>
+              </div>
+            </Card>
+
+            {/* Property Scams */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Home className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">احتيال العقارات</h3>
+              </div>
+            </Card>
+
+            {/* Credit Card Phishing */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <ShieldAlert className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">سرقة البطاقات</h3>
+              </div>
+            </Card>
+
+            {/* Stock Trading */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <LineChart className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">تداول الأسهم</h3>
+              </div>
+            </Card>
+
+            {/* Other Scams */}
+            <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <MoreHorizontal className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-bold text-card-foreground text-lg">أنواع أخرى</h3>
+              </div>
+            </Card>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground text-lg mb-6">
+              لم تجد نوع الاحتيال الذي تعرضت له؟ لا تقلق، نحن نتعامل مع جميع أنواع الاحتيال المالي
+            </p>
+            <Button 
+              onClick={() => {
+                document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              variant="outline" 
+              size="lg"
+              className="text-lg px-8"
+            >
+              تواصل معنا الآن
+            </Button>
+          </div>
         </div>
       </section>
 
