@@ -145,10 +145,10 @@ const Index = () => {
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {Array.from({ length: 6 }).map((_, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                   <div className="p-1">
                     <Card className="overflow-hidden">
-                      <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
                         <p className="text-4xl font-semibold text-muted-foreground">
                           {index + 1}
                         </p>
