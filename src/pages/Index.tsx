@@ -30,100 +30,154 @@ const Index = () => {
       [e.target.name]: e.target.value
     });
   };
-  return <div className="min-h-screen bg-background font-cairo">
-      {/* Fixed Header Section */}
-      <header className="sticky top-0 left-0 right-0 py-6 px-4 z-50 border-b border-border/50 bg-[#06102d]">
-        <div className="container max-w-4xl mx-auto text-center bg-[#06102d]">
-          <img src={logo} alt="FundFixers Logo" className="mx-auto h-[6.76rem] w-auto" />
+  return (
+    <div className="min-h-screen bg-background font-cairo">
+      {/* Header Navigation */}
+      <header className="border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <img src={logo} alt="FundFixers Logo" className="h-16 w-auto" />
+          </div>
         </div>
       </header>
 
-      {/* Spacer for fixed header */}
-      <div className="h-8"></div>
+      {/* Hero Section with Side-by-Side Layout */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="container max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Left Column - Content */}
+            <div className="space-y-8 lg:pt-12">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <span className="text-primary">منصة استرداد</span>
+                <br />
+                <span className="text-foreground">الخسائر المالية العالمية</span>
+              </h1>
 
-      {/* Hero Section */}
-      <section className="py-6 px-4">
-        <div className="container max-w-4xl mx-auto text-center">
-          
-          <h1 className="text-3xl font-bold mb-4 text-[#2ce577] md:text-4xl">
-            منصة استرداد الخسائر المالية العالمية
-          </h1>
+              <p className="text-foreground/90 text-lg md:text-xl leading-relaxed max-w-2xl">
+                نحن مرخصون من قبل الهيئة الاستثمارية العالمية، لنا صلاحية بكل ما يتعلق بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.
+              </p>
+
+              <div className="space-y-3 p-6 rounded-lg bg-secondary/30 border border-border/30">
+                <p className="font-semibold text-primary text-lg">الهيئة الاستثمارية العالمية</p>
+                <p className="text-foreground/90">المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
+                <p className="text-muted-foreground text-sm">
+                  King Charles St, London SW1A 2AH, United Kingdom
+                </p>
+              </div>
+
+              <p className="text-foreground/90 text-xl font-semibold">
+                تواصل معنا - قدم شكوى ضد شركة تداول أو فوركس نصابة للمطالبة القانونية باسترجاع أموالك
+              </p>
+            </div>
+
+            {/* Right Column - Form Card */}
+            <div className="lg:sticky lg:top-8">
+              <Card className="p-8 bg-card shadow-2xl border-0">
+                <div className="mb-6 text-center">
+                  <h2 className="text-2xl font-bold text-card-foreground mb-2">ابدأ هنا</h2>
+                  <p className="text-muted-foreground">احصل على استشارة مجانية</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="space-y-2">
+                    <label htmlFor="fullName" className="block text-card-foreground font-semibold text-right text-sm">
+                      الاسم الكامل *
+                    </label>
+                    <Input 
+                      id="fullName" 
+                      name="fullName" 
+                      value={formData.fullName} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل اسمك الكامل" 
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="block text-card-foreground font-semibold text-right text-sm">
+                      رقم الجوال *
+                    </label>
+                    <Input 
+                      id="phone" 
+                      name="phone" 
+                      type="tel" 
+                      value={formData.phone} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل رقم الجوال" 
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="country" className="block text-card-foreground font-semibold text-right text-sm">
+                      الدولة *
+                    </label>
+                    <Input 
+                      id="country" 
+                      name="country" 
+                      value={formData.country} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل اسم الدولة" 
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="block text-card-foreground font-semibold text-right text-sm">
+                      البريد الإلكتروني *
+                    </label>
+                    <Input 
+                      id="email" 
+                      name="email" 
+                      type="email" 
+                      value={formData.email} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="أدخل البريد الإلكتروني" 
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="description" className="block text-card-foreground font-semibold text-right text-sm">
+                      وصف الطلب او الحالة *
+                    </label>
+                    <Textarea 
+                      id="description" 
+                      name="description" 
+                      value={formData.description} 
+                      onChange={handleChange} 
+                      required 
+                      className="w-full min-h-[120px] text-right border-input/50 focus:border-primary transition-colors" 
+                      placeholder="اشرح حالتك بالتفصيل" 
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    إرسال الطلب
+                  </Button>
+                </form>
+              </Card>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Main Content Section */}
-      <main className="container max-w-4xl mx-auto px-4 py-12">
-        <div className="text-foreground text-lg leading-relaxed mb-16 space-y-6">
-          <p className="text-center">
-            نحن مرخصون من قبل الهيئة الاستثمارية العالمية,
-لنا صلاحية بكل ما يتعلق بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.
-          </p>
-
-          <div className="text-center mt-8 space-y-2">
-            <p className="font-semibold text-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
-            <p>المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
-            <p className="text-muted-foreground">
-              King Charles St, London SW1A 2AH, United Kingdom
-            </p>
-          </div>
-
-          <p className="text-center mt-8 text-xl font-semibold">
-            تواصل معنا - قدم شكوى ضد شركة تداول أو فوركس نصابة للمطالبة
-            القانونية باسترجاع أموالك
+      {/* Footer */}
+      <footer className="py-12 border-t border-border/30">
+        <div className="container max-w-7xl mx-auto px-4">
+          <p className="text-center text-muted-foreground">
+            FundFixers © جميع الحقوق محفوظة
           </p>
         </div>
-
-        {/* Form Section */}
-        <Card className="p-8 md:p-12 bg-card shadow-xl">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="fullName" className="block text-card-foreground font-semibold text-right">
-                الاسم الكامل
-              </label>
-              <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required className="w-full text-right" placeholder="أدخل اسمك الكامل" />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="phone" className="block text-card-foreground font-semibold text-right">
-                رقم الجوال
-              </label>
-              <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} required className="w-full text-right" placeholder="أدخل رقم الجوال" />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="country" className="block text-card-foreground font-semibold text-right">
-                الدولة
-              </label>
-              <Input id="country" name="country" value={formData.country} onChange={handleChange} required className="w-full text-right" placeholder="أدخل اسم الدولة" />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-card-foreground font-semibold text-right">
-                البريد الإلكتروني
-              </label>
-              <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full text-right" placeholder="أدخل البريد الإلكتروني" />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="description" className="block text-card-foreground font-semibold text-right">
-                وصف الطلب او الحالة
-              </label>
-              <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required className="w-full min-h-[150px] text-right" placeholder="اشرح حالتك بالتفصيل" />
-            </div>
-
-            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl py-6">
-              إرسال الطلب
-            </Button>
-          </form>
-        </Card>
-      </main>
-
-      {/* Footer */}
-      <footer className="py-8 mt-16">
-        <p className="text-center text-muted-foreground text-sm">
-          FundFixers © جميع الحقوق محفوظة
-        </p>
       </footer>
-    </div>;
+    </div>
+  );
 };
 export default Index;
