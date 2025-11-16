@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
+import { FileText, Search, Scale, HandshakeIcon, CheckCircle2 } from "lucide-react";
 import logo from "@/assets/fundfixers-new-logo.png";
 import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
 import withdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
@@ -172,6 +173,129 @@ const Index = () => {
             <CarouselPrevious className="hidden md:flex" />
             <CarouselNext className="hidden md:flex" />
           </Carousel>
+        </div>
+      </section>
+
+      {/* How We Do It Section */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              كيف نعمل؟
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              عملية بسيطة وشفافة لاسترداد أموالك المفقودة
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Connecting Line */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-primary/20 via-primary to-primary/20 -translate-y-1/2 -z-10" />
+
+            {/* Steps Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
+              {/* Step 1 */}
+              <div className="flex flex-col items-center text-center space-y-4 group">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    <FileText className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">تقديم الشكوى</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  املأ النموذج وقدم تفاصيل حالتك والشركة النصابة
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex flex-col items-center text-center space-y-4 group">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    <Search className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                    2
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">المراجعة القانونية</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  فريقنا القانوني يراجع حالتك ويحدد أفضل الإجراءات
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex flex-col items-center text-center space-y-4 group">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    <Scale className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                    3
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">التحقيق والتوثيق</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  جمع الأدلة والوثائق اللازمة للإجراءات القانونية
+                </p>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex flex-col items-center text-center space-y-4 group">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    <HandshakeIcon className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                    4
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">الإجراءات القانونية</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  نبدأ بالإجراءات القانونية الدولية ضد الشركة
+                </p>
+              </div>
+
+              {/* Step 5 */}
+              <div className="flex flex-col items-center text-center space-y-4 group">
+                <div className="relative">
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                    <CheckCircle2 className="w-10 h-10 text-primary" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm">
+                    5
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">استرداد الأموال</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  نسترد أموالك ونعيدها إليك بشكل آمن وقانوني
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Card */}
+          <Card className="mt-16 p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+            <div className="text-center space-y-6">
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                هل أنت مستعد لاسترداد أموالك؟
+              </h3>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                لا تدع المحتالين يفلتون بأموالك. ابدأ الآن واسترد حقوقك مع فريقنا القانوني المتخصص
+              </p>
+              <Button 
+                onClick={() => {
+                  document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                size="lg" 
+                className="text-lg px-8 py-6 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                ابدأ استرداد أموالك الآن
+              </Button>
+            </div>
+          </Card>
         </div>
       </section>
 
