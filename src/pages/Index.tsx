@@ -30,6 +30,8 @@ const Index = () => {
     phone: "",
     country: "",
     email: "",
+    amount: "",
+    fraudulentCompany: "",
     description: ""
   });
   const handleSubmit = (e: React.FormEvent) => {
@@ -40,6 +42,8 @@ const Index = () => {
       phone: "",
       country: "",
       email: "",
+      amount: "",
+      fraudulentCompany: "",
       description: ""
     });
   };
@@ -122,6 +126,20 @@ const Index = () => {
                       البريد الإلكتروني *
                     </label>
                     <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل البريد الإلكتروني" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="amount" className="block text-card-foreground font-semibold text-right text-sm">
+                      المبلغ *
+                    </label>
+                    <Input id="amount" name="amount" type="text" value={formData.amount} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل المبلغ المفقود" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="fraudulentCompany" className="block text-card-foreground font-semibold text-right text-sm">
+                      الشركة المحتالة *
+                    </label>
+                    <Input id="fraudulentCompany" name="fraudulentCompany" type="text" value={formData.fraudulentCompany} onChange={handleChange} required className="w-full text-right border-input/50 focus:border-primary transition-colors" placeholder="أدخل اسم الشركة المحتالة" />
                   </div>
 
                   <div className="space-y-2">
