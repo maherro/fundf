@@ -5,12 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-new-logo.png";
-import withdrawal1 from "@/assets/gallery/withdrawal-1.jpg";
-import withdrawal2 from "@/assets/gallery/withdrawal-2.jpg";
-import withdrawal3 from "@/assets/gallery/withdrawal-3.jpg";
-import withdrawal4 from "@/assets/gallery/withdrawal-4.jpg";
-import withdrawal5 from "@/assets/gallery/withdrawal-5.jpg";
-import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
+import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
+import withdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
+import withdrawal3 from "@/assets/gallery/real-withdrawal-3.png";
+import withdrawal4 from "@/assets/gallery/real-withdrawal-4.png";
 import {
   Carousel,
   CarouselContent,
@@ -24,8 +22,6 @@ const Index = () => {
     withdrawal2,
     withdrawal3,
     withdrawal4,
-    withdrawal5,
-    withdrawal6,
   ];
 
   const [formData, setFormData] = useState({
