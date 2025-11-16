@@ -62,14 +62,31 @@ const Index = () => {
       {/* Header Navigation */}
       <header className="sticky top-0 z-50 border-b border-border/30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
             <img src={logo} alt="FundFixers Logo" className="h-[65px] w-auto" />
+            <nav className="flex flex-wrap items-center justify-center gap-6">
+              <a href="#about" className="text-foreground hover:text-primary transition-colors font-semibold text-sm">
+                من نحن؟
+              </a>
+              <a href="#gallery" className="text-foreground hover:text-primary transition-colors font-semibold text-sm">
+                أموال استرجعت
+              </a>
+              <a href="#articles" className="text-foreground hover:text-primary transition-colors font-semibold text-sm">
+                مقالات وأخبار
+              </a>
+              <a href="#scam-types" className="text-foreground hover:text-primary transition-colors font-semibold text-sm">
+                بماذا نختص؟
+              </a>
+              <a href="#how-we-work" className="text-foreground hover:text-primary transition-colors font-semibold text-sm">
+                كيف نعمل؟
+              </a>
+            </nav>
           </div>
         </div>
       </header>
 
       {/* Hero Section with Side-by-Side Layout */}
-      <section className="relative py-20 px-4 overflow-hidden">
+      <section id="about" className="relative py-20 px-4 overflow-hidden">
         <div className="container max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Left Column - Content */}
@@ -165,7 +182,7 @@ const Index = () => {
       </section>
 
       {/* Gallery Slider Section */}
-      <section className="py-20 px-4 bg-secondary/20">
+      <section id="gallery" className="py-20 px-4 bg-secondary/20">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
             لمحة من اعادة أموال لزبائننا
@@ -200,7 +217,7 @@ const Index = () => {
       </section>
 
       {/* Articles Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
+      <section id="articles" className="py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
             مقالات وأخبار مهمة
@@ -250,7 +267,7 @@ const Index = () => {
       </section>
 
       {/* Types of Scams Section */}
-      <section className="py-20 px-4 bg-secondary/30">
+      <section id="scam-types" className="py-20 px-4 bg-secondary/30">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
             أنواع الاحتيال التي نساعدك في استرداد أموالك منها
@@ -360,7 +377,7 @@ const Index = () => {
       </section>
 
       {/* How We Do It Section */}
-      <section className="py-20 px-4 bg-background">
+      <section id="how-we-work" className="py-20 px-4 bg-background">
         <div className="container max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
