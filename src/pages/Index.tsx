@@ -45,7 +45,7 @@ const Index = () => {
       <section className="py-6 px-4">
         <div className="container max-w-4xl mx-auto text-center">
           
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h1 className="text-3xl font-bold mb-4 text-[#2ce577] md:text-4xl">
             منصة استرداد الخسائر المالية العالمية
           </h1>
         </div>
@@ -55,14 +55,12 @@ const Index = () => {
       <main className="container max-w-4xl mx-auto px-4 py-12">
         <div className="text-foreground text-lg leading-relaxed mb-16 space-y-6">
           <p className="text-center">
-            نحن مرخصون من قبل الهيئة الاستثمارية العالمية لنا صلاحية بكل ما يتعلق
-            بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه
-            الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية
-            للمتداولين وخسائر الأصول المتعددة.
+            نحن مرخصون من قبل الهيئة الاستثمارية العالمية,
+لنا صلاحية بكل ما يتعلق بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.
           </p>
 
           <div className="text-center mt-8 space-y-2">
-            <p className="font-semibold">الهيئة الاستثمارية العالمية</p>
+            <p className="font-semibold text-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
             <p>المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
             <p className="text-muted-foreground">
               King Charles St, London SW1A 2AH, United Kingdom
