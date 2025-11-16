@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal } from "lucide-react";
+import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, Newspaper, AlertTriangle, TrendingUp, UserCheck, ArrowLeft } from "lucide-react";
 import logo from "@/assets/fundfixers-new-logo.png";
 import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
 import withdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
@@ -191,6 +191,169 @@ const Index = () => {
             <CarouselPrevious className="hidden md:flex" />
             <CarouselNext className="hidden md:flex" />
           </Carousel>
+        </div>
+      </section>
+
+      {/* Articles Section */}
+      <section className="py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
+        <div className="container max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
+            مقالات وأخبار مهمة
+          </h2>
+          <p className="text-center text-muted-foreground text-lg mb-12 max-w-3xl mx-auto">
+            آخر الأخبار والتحديثات حول احتيال التداول وكيفية حماية أموالك
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Article 1 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Newspaper className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  الدول الأكثر تعرضًا للاحتيال في التداول: تقرير شامل لعام 2025
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  تعرف على الدول الأكثر استهدافًا من قبل شركات التداول النصابة
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d9%81%d9%8a-2025/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+
+            {/* Article 2 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <ShieldAlert className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  احتيال شركات الفوركس 2024: كيف تكشف الخدع المتطورة وتحمي أموالك؟
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  دليل شامل للكشف عن الاحتيال وحماية استثماراتك
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d9%81%d9%88%d8%b1%d9%83%d8%b3-2024/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+
+            {/* Article 3 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <AlertTriangle className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  تحذيرات جديدة: كيف تستخدم شركات التداول النصابة الأحداث الاقتصادية؟
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  كيف يستغل المحتالون الأخبار الاقتصادية لخداع المستثمرين
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%86%d8%b5%d8%a7%d8%a8%d8%a9-%d9%88%d8%a7%d9%84%d8%a3%d8%ad%d8%af%d8%a7%d8%ab-%d8%a7%d9%84%d8%a7%d9%82%d8%aa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+
+            {/* Article 4 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <TrendingUp className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  كيف تبدأ التداول بأمان: نصائح للمبتدئين للنجاح في سوق الفوركس
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  دليل شامل للمبتدئين للدخول إلى سوق التداول بأمان
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%af%d9%84%d9%8a%d9%84-%d8%a7%d9%84%d9%85%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a8%d8%aa%d8%af%d8%a6/%d9%83%d9%8a%d9%81-%d8%aa%d8%a8%d8%af%d8%a3-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a8%d8%a3%d9%85%d8%a7%d9%86/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+
+            {/* Article 5 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <UserCheck className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  خطوات إنشاء حساب تداول آمن: دليلك الشامل للبدء بثقة
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  كيفية إنشاء حساب تداول آمن وموثوق خطوة بخطوة
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%af%d9%84%d9%8a%d9%84-%d8%a7%d9%84%d9%85%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a8%d8%aa%d8%af%d8%a6/%d8%a5%d9%86%d8%b4%d8%a7%d8%a1-%d8%ad%d8%b3%d8%a7%d8%a8-%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a2%d9%85%d9%86/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+
+            {/* Article 6 */}
+            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
+              <div className="p-6 space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <DollarSign className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                  التفاوض مع شركات الفوركس المحتالة | كيف تسترجع أموالك؟
+                </h3>
+                <p className="text-muted-foreground text-right text-sm">
+                  استراتيجيات فعالة للتفاوض واسترجاع أموالك من الشركات المحتالة
+                </p>
+                <a 
+                  href="https://forexlawyer.online/%d8%a7%d8%b3%d8%aa%d8%b1%d8%a7%d8%aa%d9%8a%d8%ac%d9%8a%d8%a7%d8%aa-%d8%a7%d8%b3%d8%aa%d8%b1%d8%ac%d8%a7%d8%b9-%d8%a7%d9%84%d8%a3%d9%85%d9%88%d8%a7%d9%84/%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d9%81%d9%88%d8%b1%d9%83%d8%b3-%d8%a7%d9%84%d9%85%d8%ad%d8%aa%d8%a7%d9%84%d8%a9/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                >
+                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                </a>
+              </div>
+            </Card>
+          </div>
+
+          <div className="text-center mt-12">
+            <a 
+              href="https://forexlawyer.online/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-bold hover:bg-primary/90 transition-all duration-200 hover:shadow-lg"
+            >
+              عرض جميع المقالات <ArrowLeft className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </section>
 
