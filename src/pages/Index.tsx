@@ -185,7 +185,7 @@ const Index = () => {
       <section id="gallery" className="py-20 px-4 bg-secondary/20">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            لمحة من اعادة أموال لزبائننا
+            أموال استرجعت لزبائننا
           </h2>
           
           <Carousel
