@@ -5,6 +5,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-new-logo.png";
+import withdrawal1 from "@/assets/gallery/withdrawal-1.jpg";
+import withdrawal2 from "@/assets/gallery/withdrawal-2.jpg";
+import withdrawal3 from "@/assets/gallery/withdrawal-3.jpg";
+import withdrawal4 from "@/assets/gallery/withdrawal-4.jpg";
+import withdrawal5 from "@/assets/gallery/withdrawal-5.jpg";
+import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +19,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 const Index = () => {
+  const galleryImages = [
+    withdrawal1,
+    withdrawal2,
+    withdrawal3,
+    withdrawal4,
+    withdrawal5,
+    withdrawal6,
+  ];
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -144,15 +159,15 @@ const Index = () => {
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
-              {Array.from({ length: 6 }).map((_, index) => (
+              {galleryImages.map((image, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                   <div className="p-1">
                     <Card className="overflow-hidden">
-                      <div className="aspect-[3/4] bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <p className="text-4xl font-semibold text-muted-foreground">
-                          {index + 1}
-                        </p>
-                      </div>
+                      <img 
+                        src={image} 
+                        alt={`سحب معاملة ${index + 1}`}
+                        className="w-full h-full object-cover aspect-[3/4]"
+                      />
                     </Card>
                   </div>
                 </CarouselItem>
