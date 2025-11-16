@@ -54,7 +54,20 @@ const Index = () => {
       {/* Main Content Section */}
       <main className="container max-w-4xl mx-auto px-4 py-12">
         <div className="text-foreground text-lg leading-relaxed mb-16 space-y-6">
-          <p className="text-center text-xl font-semibold">
+          <p className="text-center">
+            نحن مرخصون من قبل الهيئة الاستثمارية العالمية,
+لنا صلاحية بكل ما يتعلق بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.
+          </p>
+
+          <div className="text-center mt-8 space-y-2">
+            <p className="font-semibold text-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
+            <p>المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
+            <p className="text-muted-foreground">
+              King Charles St, London SW1A 2AH, United Kingdom
+            </p>
+          </div>
+
+          <p className="text-center mt-8 text-xl font-semibold">
             تواصل معنا - قدم شكوى ضد شركة تداول أو فوركس نصابة للمطالبة
             القانونية باسترجاع أموالك
           </p>
@@ -103,22 +116,6 @@ const Index = () => {
             </Button>
           </form>
         </Card>
-
-        {/* Organization Info Section */}
-        <div className="mt-16 text-foreground text-lg leading-relaxed space-y-6">
-          <p className="text-center">
-            نحن مرخصون من قبل الهيئة الاستثمارية العالمية,
-لنا صلاحية بكل ما يتعلق بالضرائب المحلية و العالمية و القوانين الاستثمارية و تم منح هذه الصلاحية من قبل صندوق البنك الدولي كمنصة لاسترداد الخسائر المالية للمتداولين وخسائر الأصول المتعددة.
-          </p>
-
-          <div className="text-center mt-8 space-y-2">
-            <p className="font-semibold text-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
-            <p>المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
-            <p className="text-muted-foreground">
-              King Charles St, London SW1A 2AH, United Kingdom
-            </p>
-          </div>
-        </div>
       </main>
 
       {/* Footer */}
