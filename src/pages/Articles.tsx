@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Home } from "lucide-react";
+import { ArrowLeft, Home, MessageCircle, ArrowUp } from "lucide-react";
 import { articles, Article } from "@/data/articles";
 import logo from "@/assets/fundfixers-new-logo.png";
 
@@ -201,6 +201,26 @@ const Articles = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Back to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed left-6 bottom-6 z-50 w-12 h-12 rounded-full bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+        aria-label="Back to top"
+      >
+        <ArrowUp className="w-5 h-5 group-hover:animate-bounce" />
+      </button>
+
+      {/* WhatsApp Button */}
+      <a
+        href="https://wa.me/YOUR_PHONE_NUMBER"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed right-6 bottom-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
+        aria-label="Contact us on WhatsApp"
+      >
+        <MessageCircle className="w-7 h-7 group-hover:animate-pulse" />
+      </a>
     </div>
   );
 };
