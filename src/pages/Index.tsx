@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, Newspaper, AlertTriangle, TrendingUp, UserCheck, ArrowLeft } from "lucide-react";
 import logo from "@/assets/fundfixers-new-logo.png";
@@ -23,6 +24,187 @@ const Index = () => {
     withdrawal2,
     withdrawal3,
     withdrawal4,
+  ];
+
+  const [selectedArticle, setSelectedArticle] = useState<{
+    title: string;
+    content: string;
+    icon: any;
+  } | null>(null);
+
+  const articles = [
+    {
+      id: 1,
+      icon: Newspaper,
+      title: "الدول الأكثر تعرضًا للاحتيال في التداول: تقرير شامل لعام 2025",
+      description: "تعرف على الدول الأكثر استهدافًا من قبل شركات التداول النصابة",
+      content: `في عالم التداول الرقمي المتنامي، يواجه المستثمرون تحديات متزايدة مع انتشار عمليات الاحتيال عبر الحدود. يكشف تقرير 2025 عن الدول الأكثر تعرضًا للاحتيال في مجال التداول المالي.
+
+## الدول الأكثر استهدافًا
+
+### 1. دول الخليج العربي
+تحتل دول الخليج المرتبة الأولى في قائمة الدول الأكثر استهدافًا، حيث يستغل المحتالون:
+- الثروات الكبيرة للمستثمرين
+- نقص الوعي بآليات الاحتيال
+- سهولة التحويلات المالية الدولية
+
+### 2. الدول الأوروبية
+شهدت أوروبا ارتفاعًا كبيرًا في حالات الاحتيال، خاصة في:
+- ألمانيا وفرنسا وإيطاليا
+- استهداف المستثمرين الجدد
+- استغلال اللوائح المالية المعقدة
+
+### 3. دول جنوب شرق آسيا
+تواجه هذه المنطقة تحديات خاصة بسبب:
+- النمو السريع للتداول الإلكتروني
+- ضعف الرقابة المالية
+- انتشار الوسطاء غير المرخصين
+
+## كيف تحمي نفسك؟
+
+1. **التحقق من التراخيص**: تأكد من أن الشركة مرخصة من جهة رقابية معترف بها
+2. **البحث والتحري**: اقرأ تجارب المستخدمين الآخرين
+3. **عدم الاستعجال**: لا تتخذ قرارات سريعة تحت الضغط
+4. **استشر الخبراء**: تواصل مع محترفين في المجال المالي
+
+الوعي هو خط الدفاع الأول ضد الاحتيال. كن حذرًا ومطلعًا دائمًا على أحدث أساليب المحتالين.`
+    },
+    {
+      id: 2,
+      icon: ShieldAlert,
+      title: "احتيال شركات الفوركس 2024: كيف تكشف الخدع المتطورة وتحمي أموالك؟",
+      description: "دليل شامل للكشف عن الاحتيال وحماية استثماراتك",
+      content: `تتطور أساليب الاحتيال في سوق الفوركس باستمرار، مما يجعل من الضروري أن يكون المتداولون على دراية بأحدث التقنيات.
+
+## علامات التحذير
+
+### 1. الوعود بعائدات مضمونة
+لا يوجد استثمار مضمون في سوق الفوركس.
+
+### 2. الضغط للإيداع السريع
+- عروض محدودة زمنيًا
+- مكافآت ضخمة
+- التهديد بفقدان الفرصة
+
+### 3. صعوبة السحب
+- طلبات متكررة لمستندات
+- رسوم مرتفعة
+- تأخير متعمد
+
+الحذر والمعرفة هما سلاحك الأقوى.`
+    },
+    {
+      id: 3,
+      icon: AlertTriangle,
+      title: "تحذيرات جديدة: كيف تستخدم شركات التداول النصابة الأحداث الاقتصادية؟",
+      description: "كيف يستغل المحتالون الأخبار الاقتصادية لخداع المستثمرين",
+      content: `تستغل شركات التداول الاحتيالية الأحداث الاقتصادية الكبرى لجذب المستثمرين. 
+
+## أساليب الاستغلال
+
+### 1. استغلال التقلبات
+- يتصلون بفرص "حصرية"
+- يدعون معرفة اتجاه السوق
+- يضغطون للإيداع الفوري
+
+### 2. الإعلانات المضللة
+- إعلانات عن فرص محدودة
+- تحليلات وهمية
+- رسائل تحذيرية مزيفة
+
+الشركات الشرعية لا تضغط عليك أبدًا.`
+    },
+    {
+      id: 4,
+      icon: TrendingUp,
+      title: "كيف تبدأ التداول بأمان: نصائح للمبتدئين للنجاح في سوق الفوركس",
+      description: "دليل شامل للمبتدئين للدخول إلى سوق التداول بأمان",
+      content: `بدء التداول يمكن أن يكون مربحًا إذا اتبعت النهج الصحيح.
+
+## الخطوات الأساسية
+
+### 1. التعليم أولاً
+- تعلم المصطلحات الأساسية
+- افهم أزواج العملات
+- ادرس التحليل الفني
+
+### 2. اختيار وسيط موثوق
+- الترخيص المعتمد
+- السمعة الجيدة
+- الشفافية الكاملة
+
+### 3. البدء بحساب تجريبي
+- التدريب دون مخاطرة
+- اختبار الاستراتيجيات
+- التعود على المنصة
+
+التداول الناجح ماراثون وليس سباق سرعة.`
+    },
+    {
+      id: 5,
+      icon: UserCheck,
+      title: "خطوات إنشاء حساب تداول آمن: دليلك الشامل للبدء بثقة",
+      description: "كيفية إنشاء حساب تداول آمن وموثوق خطوة بخطوة",
+      content: `إنشاء حساب آمن هو الخطوة الأولى نحو تداول ناجح.
+
+## الخطوة 1: اختيار الوسيط
+
+### معايير الاختيار
+- الترخيص والتنظيم
+- السمعة الجيدة
+- الأمان القوي
+- الشفافية التامة
+
+## الخطوة 2: التسجيل
+
+### المعلومات المطلوبة
+- الاسم الكامل
+- عنوان السكن
+- رقم الهاتف والبريد
+- معلومات مالية
+
+## الخطوة 3: التحقق من الهوية
+
+### المستندات
+- إثبات الهوية
+- إثبات العنوان
+- كشوف بنكية
+
+أمان حسابك مسؤوليتك الشخصية.`
+    },
+    {
+      id: 6,
+      icon: DollarSign,
+      title: "التفاوض مع شركات الفوركس المحتالة | كيف تسترجع أموالك؟",
+      description: "استراتيجيات فعالة للتفاوض واسترجاع أموالك من الشركات المحتالة",
+      content: `استرجاع أموالك ممكن إذا اتبعت النهج الصحيح.
+
+## الخطوة الأولى: تقييم الوضع
+
+### اجمع الأدلة
+- المراسلات والوثائق
+- الإيصالات والمستندات
+- لقطات الشاشة
+
+## استراتيجيات التفاوض
+
+### 1. التواصل المباشر
+- أرسل طلب سحب رسمي
+- حدد موعد نهائي
+- احتفظ بالمراسلات
+
+### 2. التصعيد التدريجي
+- التهديد القانوني
+- الشكوى الرسمية
+- الجهات الرقابية
+
+### 3. وسطاء الدفع
+- رد المبلغ من البنك
+- تقديم الأدلة
+- المتابعة القانونية
+
+حقك في استرداد أموالك موجود.`
+    }
   ];
 
   const [formData, setFormData] = useState({
@@ -205,154 +387,33 @@ const Index = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Article 1 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <Newspaper className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  الدول الأكثر تعرضًا للاحتيال في التداول: تقرير شامل لعام 2025
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  تعرف على الدول الأكثر استهدافًا من قبل شركات التداول النصابة
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d9%81%d9%8a-2025/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+            {articles.map((article) => {
+              const Icon = article.icon;
+              return (
+                <Card 
+                  key={article.id}
+                  className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card cursor-pointer"
+                  onClick={() => setSelectedArticle(article)}
                 >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-
-            {/* Article 2 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <ShieldAlert className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  احتيال شركات الفوركس 2024: كيف تكشف الخدع المتطورة وتحمي أموالك؟
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  دليل شامل للكشف عن الاحتيال وحماية استثماراتك
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d9%81%d9%88%d8%b1%d9%83%d8%b3-2024/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-
-            {/* Article 3 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <AlertTriangle className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  تحذيرات جديدة: كيف تستخدم شركات التداول النصابة الأحداث الاقتصادية؟
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  كيف يستغل المحتالون الأخبار الاقتصادية لخداع المستثمرين
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%a3%d8%ae%d8%a8%d8%a7%d8%b1-%d9%88%d8%aa%d9%86%d8%a8%d9%8a%d9%87%d8%a7%d8%aa-%d8%a7%d8%ad%d8%aa%d9%8a%d8%a7%d9%84-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84/%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%86%d8%b5%d8%a7%d8%a8%d8%a9-%d9%88%d8%a7%d9%84%d8%a3%d8%ad%d8%af%d8%a7%d8%ab-%d8%a7%d9%84%d8%a7%d9%82%d8%aa/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-
-            {/* Article 4 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  كيف تبدأ التداول بأمان: نصائح للمبتدئين للنجاح في سوق الفوركس
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  دليل شامل للمبتدئين للدخول إلى سوق التداول بأمان
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%af%d9%84%d9%8a%d9%84-%d8%a7%d9%84%d9%85%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a8%d8%aa%d8%af%d8%a6/%d9%83%d9%8a%d9%81-%d8%aa%d8%a8%d8%af%d8%a3-%d8%a7%d9%84%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a8%d8%a3%d9%85%d8%a7%d9%86/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-
-            {/* Article 5 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <UserCheck className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  خطوات إنشاء حساب تداول آمن: دليلك الشامل للبدء بثقة
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  كيفية إنشاء حساب تداول آمن وموثوق خطوة بخطوة
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%af%d9%84%d9%8a%d9%84-%d8%a7%d9%84%d9%85%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a7%d9%84%d9%85%d8%a8%d8%aa%d8%af%d8%a6/%d8%a5%d9%86%d8%b4%d8%a7%d8%a1-%d8%ad%d8%b3%d8%a7%d8%a8-%d8%aa%d8%af%d8%a7%d9%88%d9%84-%d8%a2%d9%85%d9%86/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-
-            {/* Article 6 */}
-            <Card className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card">
-              <div className="p-6 space-y-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <DollarSign className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
-                  التفاوض مع شركات الفوركس المحتالة | كيف تسترجع أموالك؟
-                </h3>
-                <p className="text-muted-foreground text-right text-sm">
-                  استراتيجيات فعالة للتفاوض واسترجاع أموالك من الشركات المحتالة
-                </p>
-                <a 
-                  href="https://forexlawyer.online/%d8%a7%d8%b3%d8%aa%d8%b1%d8%a7%d8%aa%d9%8a%d8%ac%d9%8a%d8%a7%d8%aa-%d8%a7%d8%b3%d8%aa%d8%b1%d8%ac%d8%a7%d8%b9-%d8%a7%d9%84%d8%a3%d9%85%d9%88%d8%a7%d9%84/%d8%b4%d8%b1%d9%83%d8%a7%d8%aa-%d8%a7%d9%84%d9%81%d9%88%d8%b1%d9%83%d8%b3-%d8%a7%d9%84%d9%85%d8%ad%d8%aa%d8%a7%d9%84%d8%a9/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                >
-                  اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                </a>
-              </div>
-            </Card>
-          </div>
-
-          <div className="text-center mt-12">
-            <a 
-              href="https://forexlawyer.online/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-bold hover:bg-primary/90 transition-all duration-200 hover:shadow-lg"
-            >
-              عرض جميع المقالات <ArrowLeft className="w-5 h-5" />
-            </a>
+                  <div className="p-6 space-y-4">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed">
+                      {article.title}
+                    </h3>
+                    <p className="text-muted-foreground text-right text-sm">
+                      {article.description}
+                    </p>
+                    <button 
+                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
+                    >
+                      اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
+                    </button>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -598,6 +659,65 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* Article Dialog */}
+      <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedArticle && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                    {(() => {
+                      const Icon = selectedArticle.icon;
+                      return <Icon className="w-6 h-6 text-primary" />;
+                    })()}
+                  </div>
+                  <DialogTitle className="text-right text-2xl leading-relaxed flex-1">
+                    {selectedArticle.title}
+                  </DialogTitle>
+                </div>
+              </DialogHeader>
+              <div className="prose prose-lg max-w-none text-right" dir="rtl">
+                {selectedArticle.content.split('\n').map((paragraph, index) => {
+                  if (paragraph.startsWith('## ')) {
+                    return (
+                      <h2 key={index} className="text-2xl font-bold mt-6 mb-4 text-foreground">
+                        {paragraph.replace('## ', '')}
+                      </h2>
+                    );
+                  } else if (paragraph.startsWith('### ')) {
+                    return (
+                      <h3 key={index} className="text-xl font-semibold mt-4 mb-3 text-foreground">
+                        {paragraph.replace('### ', '')}
+                      </h3>
+                    );
+                  } else if (paragraph.startsWith('- ')) {
+                    return (
+                      <li key={index} className="text-muted-foreground mr-6 mb-2">
+                        {paragraph.replace('- ', '')}
+                      </li>
+                    );
+                  } else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+                    return (
+                      <p key={index} className="font-bold text-foreground my-3">
+                        {paragraph.replace(/\*\*/g, '')}
+                      </p>
+                    );
+                  } else if (paragraph.trim()) {
+                    return (
+                      <p key={index} className="text-muted-foreground leading-relaxed mb-4">
+                        {paragraph}
+                      </p>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>;
 };
 export default Index;
