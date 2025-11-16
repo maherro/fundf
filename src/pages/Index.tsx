@@ -32,7 +32,7 @@ const Index = () => {
   };
   return <div className="min-h-screen bg-background font-cairo">
       {/* Fixed Header Section */}
-      <header className="sticky top-0 left-0 right-0 bg-[#1e2936] py-6 px-4 z-50 border-b border-border/50">
+      <header className="sticky top-0 left-0 right-0 py-6 px-4 z-50 border-b border-border/50 bg-[#06102d]">
         <div className="container max-w-4xl mx-auto text-center bg-[#06102d]">
           <img src={logo} alt="FundFixers Logo" className="mx-auto h-[5.2rem] w-auto" />
         </div>
