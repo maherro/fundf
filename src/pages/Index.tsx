@@ -39,10 +39,10 @@ const Index = () => {
       </header>
 
       {/* Spacer for fixed header */}
-      <div className="h-32"></div>
+      <div className="h-8"></div>
 
       {/* Hero Section */}
-      <section className="py-12 px-4">
+      <section className="py-6 px-4">
         <div className="container max-w-4xl mx-auto text-center">
           
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
