@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +14,26 @@ const Index = () => {
     email: "",
     description: "",
   });
+
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsHeaderVisible(false);
+      } else {
+        setIsHeaderVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,8 +58,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background font-cairo">
-      {/* Header Section */}
-      <header className="bg-background py-12 px-4">
+      {/* Fixed Header Section */}
+      <header 
+        className={`fixed top-0 left-0 right-0 bg-background py-6 px-4 z-50 transition-transform duration-300 border-b border-border/50 ${
+          isHeaderVisible ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="container max-w-4xl mx-auto text-center">
+          <img
+            src={logo}
+            alt="FundFixers Logo"
+            className="mx-auto h-16 w-auto"
+          />
+        </div>
+      </header>
+
+      {/* Spacer for fixed header */}
+      <div className="h-32"></div>
+
+      {/* Hero Section */}
+      <section className="py-12 px-4">
         <div className="container max-w-4xl mx-auto text-center">
           <img
             src={logo}
@@ -50,7 +88,7 @@ const Index = () => {
             منصة استرداد الخسائر المالية العالمية
           </h1>
         </div>
-      </header>
+      </section>
 
       {/* Main Content Section */}
       <main className="container max-w-4xl mx-auto px-4 py-12">
