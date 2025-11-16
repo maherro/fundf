@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-logo.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 const Index = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -72,6 +78,50 @@ const Index = () => {
             القانونية باسترجاع أموالك
           </p>
         </div>
+
+        {/* Featured Platforms Carousel */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-center mb-8 text-[#2ce577]">
+            منصات التداول التي نعمل معها
+          </h2>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 2000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {[
+                "Binance",
+                "Coinbase",
+                "Kraken",
+                "Bybit",
+                "KuCoin",
+                "MetaTrader 4",
+                "MetaTrader 5",
+                "eToro",
+                "Plus500",
+                "XM",
+                "Forex.com",
+                "IC Markets",
+              ].map((platform) => (
+                <CarouselItem key={platform} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <Card className="p-6 flex items-center justify-center bg-card hover:bg-accent/10 transition-colors border-border/50">
+                    <p className="text-card-foreground font-semibold text-center">
+                      {platform}
+                    </p>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </section>
 
         {/* Form Section */}
         <Card className="p-8 md:p-12 bg-card shadow-xl">
