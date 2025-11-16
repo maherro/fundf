@@ -48,7 +48,7 @@ const Index = () => {
             <div className="space-y-8 lg:pt-12">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="text-primary">منصة استرداد</span>
-                <br />
+                <br className="text-[#1a80fc]" />
                 <span className="text-foreground">الخسائر المالية العالمية</span>
               </h1>
 
@@ -57,7 +57,7 @@ const Index = () => {
               </p>
 
               <div className="space-y-3 p-6 rounded-lg bg-secondary/30 border border-border/30">
-                <p className="font-semibold text-primary text-lg">الهيئة الاستثمارية العالمية</p>
+                <p className="font-semibold text-primary text-lg bg-[#1a80fc]">الهيئة الاستثمارية العالمية</p>
                 <p className="text-foreground/90">المقر الرئيسي - لندن بريطانيا - وزارة المالية</p>
                 <p className="text-muted-foreground text-sm">
                   King Charles St, London SW1A 2AH, United Kingdom
