@@ -35,6 +35,10 @@ All colors MUST be HSL.
     --accent: 214 85% 65%;
     --accent-foreground: 0 0% 98%;
 
+    /* Success/Green - from logo */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 98%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
@@ -83,6 +87,9 @@ All colors MUST be HSL.
 
     --accent: 214 85% 65%;
     --accent-foreground: 0 0% 98%;
+
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;

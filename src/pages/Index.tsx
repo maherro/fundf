@@ -277,12 +277,12 @@ const Index = () => {
           </div>
 
           {/* CTA Card */}
-          <Card className="mt-16 p-8 md:p-12 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
+          <Card className="mt-16 p-8 md:p-12 bg-success border-success/30">
             <div className="text-center space-y-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+              <h3 className="text-2xl md:text-3xl font-bold text-success-foreground">
                 هل أنت مستعد لاسترداد أموالك؟
               </h3>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              <p className="text-success-foreground/90 text-lg max-w-2xl mx-auto">
                 لا تدع المحتالين يفلتون بأموالك. ابدأ الآن واسترد حقوقك مع فريقنا القانوني المتخصص
               </p>
               <Button 
