@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +12,10 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 const Index = () => {
+  const plugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
+  
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -89,11 +93,7 @@ const Index = () => {
               align: "start",
               loop: true,
             }}
-            plugins={[
-              Autoplay({
-                delay: 2000,
-              }),
-            ]}
+            plugins={[plugin.current]}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
