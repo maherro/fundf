@@ -18,6 +18,10 @@ import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
 import withdrawal7 from "@/assets/gallery/withdrawal-7.jpg";
 import withdrawal8 from "@/assets/gallery/withdrawal-8.jpg";
 import withdrawal9 from "@/assets/gallery/withdrawal-9.jpg";
+import realWithdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
+import realWithdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
+import realWithdrawal3 from "@/assets/gallery/real-withdrawal-3.png";
+import realWithdrawal4 from "@/assets/gallery/real-withdrawal-4.png";
 import {
   Carousel,
   CarouselContent,
@@ -38,6 +42,10 @@ const Index = () => {
     withdrawal7,
     withdrawal8,
     withdrawal9,
+    realWithdrawal1,
+    realWithdrawal2,
+    realWithdrawal3,
+    realWithdrawal4,
   ];
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
@@ -222,12 +230,6 @@ const Index = () => {
               loop: false,
               slidesToScroll: 1,
             }}
-            plugins={[
-              Autoplay({
-                delay: 3000,
-                stopOnInteraction: true,
-              }),
-            ]}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
