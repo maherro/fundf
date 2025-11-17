@@ -40,6 +40,12 @@ serve(async (req) => {
     
     console.log(`Total lines in markdown: ${lines.length}`);
     
+    // Log the first 30 lines to see the structure
+    console.log('=== First 30 lines of markdown ===');
+    for (let i = 0; i < Math.min(30, lines.length); i++) {
+      console.log(`Line ${i}: "${lines[i].substring(0, 100)}"`);
+    }
+    
     for (let i = 0; i < lines.length && articles.length < 12; i++) {
       const line = lines[i].trim();
       
