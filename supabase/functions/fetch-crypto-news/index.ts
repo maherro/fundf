@@ -22,26 +22,61 @@ serve(async (req) => {
   try {
     console.log('Fetching cryptocurrency news...');
     
-    const response = await fetch('https://sa.investing.com/news/cryptocurrency-news');
-    const html = await response.text();
+    // Use a service that can convert HTML to markdown for easier parsing
+    const response = await fetch('https://r.jina.ai/https://sa.investing.com/news/cryptocurrency-news', {
+      headers: {
+        'Accept': 'text/plain'
+      }
+    });
+    const markdown = await response.text();
     
-    // Parse the HTML to extract news articles
+    console.log('Fetched markdown content, length:', markdown.length);
+    
+    // Parse the markdown to extract news articles
     const articles: NewsArticle[] = [];
     
-    // Extract article blocks - looking for patterns in the HTML
-    const articlePattern = /- \[(.*?)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/article-\d+)\)\s+.*?\s+(.*?)\s+- بواسطة(.*?)•(.*?)(?=\n|$)/gs;
+    // Match pattern: - [title](url)\n\ndescription\n\n- بواسطةauthor•timeago
+    const lines = markdown.split('\n');
     
-    let match;
-    while ((match = articlePattern.exec(html)) !== null && articles.length < 12) {
-      const [, title, url, description, author, timeAgo] = match;
+    for (let i = 0; i < lines.length && articles.length < 12; i++) {
+      const line = lines[i].trim();
       
-      articles.push({
-        title: title.trim(),
-        description: description.trim(),
-        url: url.trim(),
-        author: author.trim(),
-        timeAgo: timeAgo.trim(),
-      });
+      // Look for article links
+      const linkMatch = line.match(/^-\s*\[(.*?)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/article-\d+)\)/);
+      
+      if (linkMatch) {
+        const title = linkMatch[1].trim();
+        const url = linkMatch[2].trim();
+        
+        // Get description (usually 2 lines down)
+        let description = '';
+        if (i + 2 < lines.length) {
+          description = lines[i + 2].trim();
+          // Remove author prefix if present
+          description = description.replace(/^[A-Za-z\s]+-\s*/, '');
+        }
+        
+        // Get author and time (usually 4 lines down)
+        let author = 'Investing.com';
+        let timeAgo = 'مؤخراً';
+        
+        if (i + 4 < lines.length) {
+          const authorLine = lines[i + 4].trim();
+          const authorMatch = authorLine.match(/^-\s*بواسطة(.*?)•(.*?)$/);
+          if (authorMatch) {
+            author = authorMatch[1].trim();
+            timeAgo = authorMatch[2].trim();
+          }
+        }
+        
+        articles.push({
+          title,
+          url,
+          description: description.substring(0, 200), // Limit description length
+          author,
+          timeAgo,
+        });
+      }
     }
 
     console.log(`Parsed ${articles.length} articles`);
