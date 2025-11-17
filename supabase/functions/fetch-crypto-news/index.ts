@@ -43,6 +43,11 @@ serve(async (req) => {
     for (let i = 0; i < lines.length && articles.length < 12; i++) {
       const line = lines[i].trim();
       
+      // Log lines that start with dash for debugging
+      if (line.startsWith('-')) {
+        console.log(`Line ${i} starts with dash: "${line.substring(0, 100)}..."`);
+      }
+      
       // Look for article links
       const linkMatch = line.match(/^-\s*\[(.*?)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/article-\d+)\)/);
       
@@ -96,56 +101,10 @@ serve(async (req) => {
     }
 
     console.log(`Parsed ${articles.length} articles`);
-
-    // Generate images for articles in background
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     
-    if (LOVABLE_API_KEY && articles.length > 0) {
-      // Generate images for each article
-      const articlesWithImages = await Promise.all(
-        articles.map(async (article) => {
-          try {
-            // Create a prompt based on the article title
-            const imagePrompt = `Professional financial news illustration for: ${article.title}. Modern, clean, cryptocurrency and blockchain themed, high quality, 16:9 aspect ratio`;
-            
-            const imageResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                model: 'google/gemini-2.5-flash-image-preview',
-                messages: [
-                  {
-                    role: 'user',
-                    content: imagePrompt
-                  }
-                ],
-                modalities: ['image', 'text']
-              }),
-            });
-
-            if (imageResponse.ok) {
-              const imageData = await imageResponse.json();
-              const imageUrl = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-              
-              if (imageUrl) {
-                return { ...article, image: imageUrl };
-              }
-            }
-          } catch (error) {
-            console.error('Error generating image:', error);
-          }
-          
-          return article;
-        })
-      );
-
-      return new Response(
-        JSON.stringify({ articles: articlesWithImages }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    // Log first few article titles if any found
+    if (articles.length > 0) {
+      console.log('Sample articles:', articles.slice(0, 2).map(a => a.title));
     }
 
     return new Response(
