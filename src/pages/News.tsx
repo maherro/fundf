@@ -14,7 +14,6 @@ interface NewsArticle {
   url: string;
   author: string;
   timeAgo: string;
-  image?: string;
 }
 
 const News = () => {
@@ -85,7 +84,6 @@ const News = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...Array(9)].map((_, i) => (
                 <Card key={i} className="p-6 space-y-4">
-                  <Skeleton className="h-48 w-full" />
                   <Skeleton className="h-6 w-3/4" />
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-full" />
@@ -100,15 +98,6 @@ const News = () => {
                   key={index}
                   className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card"
                 >
-                  {article.image && (
-                    <div className="w-full h-48 overflow-hidden">
-                      <img 
-                        src={article.image} 
-                        alt={article.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
                   <div className="p-6 space-y-4">
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>بواسطة {article.author}</span>
