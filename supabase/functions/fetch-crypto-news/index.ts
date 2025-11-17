@@ -26,15 +26,10 @@ serve(async (req) => {
     });
     const markdown = await response.text();
     
-    console.log('=== FULL MARKDOWN START ===');
-    console.log(markdown);
-    console.log('=== FULL MARKDOWN END ===');
-    
     const articles: NewsArticle[] = [];
     const lines = markdown.split('\n');
-    console.log(`Total lines in markdown: ${lines.length}`);
     
-    for (let i = 0; i < lines.length && articles.length < 12; i++) {
+    for (let i = 0; i < lines.length && articles.length < 30; i++) {
       const line = lines[i].trim();
       
       // Look for article links with asterisk bullets (not dashes!)
