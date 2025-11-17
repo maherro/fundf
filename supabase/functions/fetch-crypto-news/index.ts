@@ -48,34 +48,40 @@ serve(async (req) => {
         const title = linkMatch[1].trim();
         const url = linkMatch[2].trim();
         
-        // Get description (usually 2 lines down)
+        // Get description (line i+2, but skip if blank)
         let description = '';
-        if (i + 2 < lines.length) {
-          description = lines[i + 2].trim();
-          // Remove author prefix if present
-          description = description.replace(/^[A-Za-z\s]+-\s*/, '');
-        }
-        
-        // Get author and time (usually 4 lines down)
-        let author = 'Investing.com';
-        let timeAgo = 'مؤخراً';
-        
-        if (i + 4 < lines.length) {
-          const authorLine = lines[i + 4].trim();
-          const authorMatch = authorLine.match(/^-\s*بواسطة(.*?)•(.*?)$/);
-          if (authorMatch) {
-            author = authorMatch[1].trim();
-            timeAgo = authorMatch[2].trim();
+        for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
+          const potentialDesc = lines[j].trim();
+          if (potentialDesc && !potentialDesc.startsWith('-') && !potentialDesc.startsWith('بواسطة')) {
+            // Remove author prefix pattern like "Arincen - description"
+            description = potentialDesc.replace(/^[A-Za-z]+\s*-\s*/, '');
+            break;
           }
         }
         
-        articles.push({
-          title,
-          url,
-          description: description.substring(0, 200), // Limit description length
-          author,
-          timeAgo,
-        });
+        // Get author and time - look for the line with بواسطة pattern
+        let author = 'Investing.com';
+        let timeAgo = 'مؤخراً';
+        
+        for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
+          const potentialAuthor = lines[j].trim();
+          const authorMatch = potentialAuthor.match(/^-\s*بواسطة(.*?)•(.*?)$/);
+          if (authorMatch) {
+            author = authorMatch[1].trim();
+            timeAgo = authorMatch[2].trim();
+            break;
+          }
+        }
+        
+        if (description) {
+          articles.push({
+            title,
+            url,
+            description: description.substring(0, 200),
+            author,
+            timeAgo,
+          });
+        }
       }
     }
 
