@@ -314,14 +314,6 @@ const Index = () => {
                   </Card>
                 ))}
               </div>
-              
-              <div className="text-center mt-12">
-                <Link to="/news">
-                  <Button size="lg" className="gap-2 px-8 py-6 text-lg">
-                    المزيد من الأخبار <ArrowLeft className="w-5 h-5" />
-                  </Button>
-                </Link>
-              </div>
             </>
           )}
         </div>
