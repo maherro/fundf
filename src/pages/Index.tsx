@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,19 +18,13 @@ import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
 import withdrawal7 from "@/assets/gallery/withdrawal-7.jpg";
 import withdrawal8 from "@/assets/gallery/withdrawal-8.jpg";
 import withdrawal9 from "@/assets/gallery/withdrawal-9.jpg";
-import realWithdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
-import realWithdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
-import realWithdrawal3 from "@/assets/gallery/real-withdrawal-3.png";
-import realWithdrawal4 from "@/assets/gallery/real-withdrawal-4.png";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 const Index = () => {
   const galleryImages = [
     withdrawal1,
@@ -42,23 +36,9 @@ const Index = () => {
     withdrawal7,
     withdrawal8,
     withdrawal9,
-    realWithdrawal1,
-    realWithdrawal2,
-    realWithdrawal3,
-    realWithdrawal4,
   ];
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-
-  useEffect(() => {
-    if (!carouselApi) {
-      return;
-    }
-
-    console.log("Carousel initialized with", carouselApi.scrollSnapList().length, "slides");
-  }, [carouselApi]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -212,83 +192,39 @@ const Index = () => {
       </section>
 
       {/* Gallery Slider Section */}
-      <section id="gallery" className="py-20 px-4 bg-secondary/20 overflow-hidden">
+      <section id="gallery" className="py-20 px-4 bg-secondary/20">
         <div className="container max-w-7xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground animate-fade-in">
-              أموال استرجعت لزبائننا
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              شاهد نماذج حقيقية من المعاملات الناجحة لعملائنا
-            </p>
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+            أموال استرجعت لزبائننا
+          </h2>
           
           <Carousel
-            setApi={setCarouselApi}
             opts={{
               align: "start",
-              loop: false,
-              slidesToScroll: 1,
+              loop: true,
             }}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
-                  <div className="p-2 group">
-                    <Card className="overflow-hidden border-2 border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transform hover:-translate-y-2"
-                          onClick={() => setSelectedImage(image)}>
-                      <div className="relative overflow-hidden bg-muted">
-                        <img 
-                          src={image} 
-                          alt={`معاملة ناجحة ${index + 1}`}
-                          className="w-full h-full object-cover aspect-[3/4] transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="absolute bottom-4 right-4 left-4">
-                            <div className="flex items-center justify-center gap-2 text-white">
-                              <Search className="w-5 h-5" />
-                              <span className="font-bold">اضغط للعرض الكامل</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                  <div className="p-1">
+                    <Card className="overflow-hidden">
+                      <img 
+                        src={image} 
+                        alt={`سحب معاملة ${index + 1}`}
+                        className="w-full h-full object-cover aspect-[3/4]"
+                      />
                     </Card>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="-left-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
-            <CarouselNext className="-right-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
           </Carousel>
         </div>
       </section>
-
-      {/* Image Popup Dialog */}
-      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="max-w-5xl w-full p-0 overflow-hidden bg-background/95 backdrop-blur">
-          <DialogHeader className="sr-only">
-            <DialogTitle>عرض الصورة</DialogTitle>
-            <DialogDescription>معاملة استرداد ناجحة</DialogDescription>
-          </DialogHeader>
-          {selectedImage && (
-            <div className="relative animate-scale-in">
-              <img 
-                src={selectedImage} 
-                alt="معاملة استرداد ناجحة"
-                className="w-full h-auto max-h-[85vh] object-contain"
-              />
-              <Button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 left-4 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-full w-10 h-10 p-0 shadow-lg"
-                size="icon"
-              >
-                ✕
-              </Button>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
 
       {/* Articles Section */}
       <section id="articles" className="py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
