@@ -1,0 +1,4 @@
+project_id = "fhasufleijxnjicumwug"
+
+[functions.fetch-crypto-news]
+verify_jwt = false
