@@ -41,6 +41,7 @@ const Index = () => {
   ];
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
   const [cryptoNews, setCryptoNews] = useState<any[]>([]);
   const [newsLoading, setNewsLoading] = useState(true);
 
@@ -93,7 +94,8 @@ const Index = () => {
       [e.target.name]: e.target.value
     });
   };
-  return <div className="min-h-screen bg-background font-cairo">
+  return (
+    <div className="min-h-screen bg-background font-cairo">
       {/* Header Navigation */}
       <header className="border-b border-border/30 bg-background">
         <div className="container max-w-7xl mx-auto px-4 py-4">
@@ -234,12 +236,20 @@ const Index = () => {
               {galleryImages.map((image, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                   <div className="p-1">
-                    <Card className="overflow-hidden">
-                      <img 
-                        src={image} 
-                        alt={`سحب معاملة ${index + 1}`}
-                        className="w-full h-full object-cover aspect-[3/4]"
-                      />
+                    <Card 
+                      className="overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:scale-105"
+                      onClick={() => setSelectedGalleryImage(image)}
+                    >
+                      <div className="relative">
+                        <img 
+                          src={image} 
+                          alt={`سحب معاملة ${index + 1}`}
+                          className="w-full h-full object-cover aspect-[3/4]"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                          <Search className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      </div>
                     </Card>
                   </div>
                 </CarouselItem>
@@ -694,6 +704,28 @@ const Index = () => {
       >
         <MessageCircle className="w-7 h-7 group-hover:animate-pulse" />
       </a>
-    </div>;
+
+      {/* Gallery Image Lightbox */}
+      <Dialog open={!!selectedGalleryImage} onOpenChange={(open) => !open && setSelectedGalleryImage(null)}>
+        <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black/95 border-0">
+          <button
+            onClick={() => setSelectedGalleryImage(null)}
+            className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-200 flex items-center justify-center group"
+            aria-label="Close"
+          >
+            <span className="text-2xl group-hover:rotate-90 transition-transform duration-200">×</span>
+          </button>
+          {selectedGalleryImage && (
+            <img
+              src={selectedGalleryImage}
+              alt="سحب معاملة"
+              className="w-full h-auto max-h-[90vh] object-contain"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 };
+
 export default Index;
