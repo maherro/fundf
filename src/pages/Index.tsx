@@ -231,9 +231,6 @@ const Index = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                          #{index + 1}
-                        </div>
                       </div>
                     </Card>
                   </div>
