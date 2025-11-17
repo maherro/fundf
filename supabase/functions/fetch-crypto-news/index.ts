@@ -38,6 +38,8 @@ serve(async (req) => {
     // Match pattern: - [title](url)\n\ndescription\n\n- بواسطةauthor•timeago
     const lines = markdown.split('\n');
     
+    console.log(`Total lines in markdown: ${lines.length}`);
+    
     for (let i = 0; i < lines.length && articles.length < 12; i++) {
       const line = lines[i].trim();
       
@@ -45,16 +47,20 @@ serve(async (req) => {
       const linkMatch = line.match(/^-\s*\[(.*?)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/article-\d+)\)/);
       
       if (linkMatch) {
+        console.log(`Found article link at line ${i}: ${linkMatch[1].substring(0, 50)}...`);
         const title = linkMatch[1].trim();
         const url = linkMatch[2].trim();
         
-        // Get description (line i+2, but skip if blank)
+        // Get description (look in next few lines)
         let description = '';
         for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
           const potentialDesc = lines[j].trim();
-          if (potentialDesc && !potentialDesc.startsWith('-') && !potentialDesc.startsWith('بواسطة')) {
+          console.log(`  Checking line ${j} for description: "${potentialDesc.substring(0, 50)}..."`);
+          
+          if (potentialDesc && !potentialDesc.startsWith('-') && !potentialDesc.includes('بواسطة')) {
             // Remove author prefix pattern like "Arincen - description"
             description = potentialDesc.replace(/^[A-Za-z]+\s*-\s*/, '');
+            console.log(`  Found description: "${description.substring(0, 50)}..."`);
             break;
           }
         }
@@ -69,6 +75,7 @@ serve(async (req) => {
           if (authorMatch) {
             author = authorMatch[1].trim();
             timeAgo = authorMatch[2].trim();
+            console.log(`  Found author: ${author}, time: ${timeAgo}`);
             break;
           }
         }
@@ -81,6 +88,9 @@ serve(async (req) => {
             author,
             timeAgo,
           });
+          console.log(`  ✓ Article added! Total: ${articles.length}`);
+        } else {
+          console.log(`  ✗ Skipped - no description found`);
         }
       }
     }
