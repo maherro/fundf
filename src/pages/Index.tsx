@@ -9,10 +9,15 @@ import { toast } from "sonner";
 import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, ArrowLeft, ArrowUp, MessageCircle } from "lucide-react";
 import { articles } from "@/data/articles";
 import logo from "@/assets/fundfixers-new-logo.png";
-import withdrawal1 from "@/assets/gallery/real-withdrawal-1.jpg";
-import withdrawal2 from "@/assets/gallery/real-withdrawal-2.webp";
-import withdrawal3 from "@/assets/gallery/real-withdrawal-3.png";
-import withdrawal4 from "@/assets/gallery/real-withdrawal-4.png";
+import withdrawal1 from "@/assets/gallery/withdrawal-1.jpg";
+import withdrawal2 from "@/assets/gallery/withdrawal-2.jpg";
+import withdrawal3 from "@/assets/gallery/withdrawal-3.jpg";
+import withdrawal4 from "@/assets/gallery/withdrawal-4.jpg";
+import withdrawal5 from "@/assets/gallery/withdrawal-5.jpg";
+import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
+import withdrawal7 from "@/assets/gallery/withdrawal-7.jpg";
+import withdrawal8 from "@/assets/gallery/withdrawal-8.jpg";
+import withdrawal9 from "@/assets/gallery/withdrawal-9.jpg";
 import {
   Carousel,
   CarouselContent,
@@ -26,6 +31,11 @@ const Index = () => {
     withdrawal2,
     withdrawal3,
     withdrawal4,
+    withdrawal5,
+    withdrawal6,
+    withdrawal7,
+    withdrawal8,
+    withdrawal9,
   ];
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
