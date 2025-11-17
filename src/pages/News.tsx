@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, ArrowLeft, ArrowUp, MessageCircle, ExternalLink } from "lucide-react";
+import { Home, ArrowUp, MessageCircle, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-new-logo.png";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface NewsArticle {
   title: string;
@@ -19,6 +21,9 @@ interface NewsArticle {
 const News = () => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
+  const [articleContent, setArticleContent] = useState<string>("");
+  const [loadingContent, setLoadingContent] = useState(false);
 
   useEffect(() => {
     fetchNews();
@@ -44,6 +49,31 @@ const News = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const fetchArticleContent = async (article: NewsArticle) => {
+    setSelectedArticle(article);
+    setLoadingContent(true);
+    setArticleContent("");
+
+    try {
+      const response = await fetch(`https://r.jina.ai/${article.url}`, {
+        headers: { 'Accept': 'text/plain' }
+      });
+      const markdown = await response.text();
+      setArticleContent(markdown);
+    } catch (error) {
+      console.error('Error fetching article:', error);
+      toast.error('فشل تحميل المقال');
+      setArticleContent('عذراً، حدث خطأ في تحميل المقال.');
+    } finally {
+      setLoadingContent(false);
+    }
+  };
+
+  const closeArticle = () => {
+    setSelectedArticle(null);
+    setArticleContent("");
   };
 
   return (
@@ -109,17 +139,13 @@ const News = () => {
                     <p className="text-muted-foreground text-right text-sm line-clamp-3">
                       {article.description}
                     </p>
-                    <a 
-                      href={article.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => fetchArticleContent(article)}
                     >
-                      <Button variant="outline" className="w-full gap-2">
-                        اقرأ المزيد
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                    </a>
+                      اقرأ المزيد
+                    </Button>
                   </div>
                 </Card>
               ))}
@@ -153,6 +179,43 @@ const News = () => {
       >
         <ArrowUp className="w-6 h-6" />
       </button>
+
+      {/* Article Modal */}
+      <Dialog open={!!selectedArticle} onOpenChange={(open) => !open && closeArticle()}>
+        <DialogContent className="max-w-4xl max-h-[90vh] p-0">
+          <DialogHeader className="p-6 pb-4">
+            <DialogTitle className="text-right text-2xl font-bold">
+              {selectedArticle?.title}
+            </DialogTitle>
+            <div className="flex items-center justify-between text-sm text-muted-foreground pt-2">
+              <span>{selectedArticle?.timeAgo}</span>
+              <span>بواسطة {selectedArticle?.author}</span>
+            </div>
+          </DialogHeader>
+          <ScrollArea className="max-h-[calc(90vh-120px)] px-6 pb-6">
+            {loadingContent ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="prose prose-lg max-w-none dark:prose-invert text-right" dir="rtl">
+                {articleContent.split('\n').map((paragraph, idx) => {
+                  if (paragraph.startsWith('#')) {
+                    const level = paragraph.match(/^#+/)?.[0].length || 1;
+                    const text = paragraph.replace(/^#+\s*/, '');
+                    const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements;
+                    return <Tag key={idx} className="font-bold mb-4 mt-6">{text}</Tag>;
+                  }
+                  if (paragraph.trim()) {
+                    return <p key={idx} className="mb-4 leading-relaxed">{paragraph}</p>;
+                  }
+                  return null;
+                })}
+              </div>
+            )}
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
