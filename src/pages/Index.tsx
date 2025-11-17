@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 const Index = () => {
   const galleryImages = [
     withdrawal1,
@@ -40,6 +42,15 @@ const Index = () => {
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+
+  useEffect(() => {
+    if (!carouselApi) {
+      return;
+    }
+
+    console.log("Carousel initialized with", carouselApi.scrollSnapList().length, "slides");
+  }, [carouselApi]);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -205,15 +216,23 @@ const Index = () => {
           </div>
           
           <Carousel
+            setApi={setCarouselApi}
             opts={{
               align: "start",
               loop: false,
+              slidesToScroll: 1,
             }}
+            plugins={[
+              Autoplay({
+                delay: 3000,
+                stopOnInteraction: true,
+              }),
+            ]}
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="p-2 group">
                     <Card className="overflow-hidden border-2 border-border/50 hover:border-primary/50 transition-all duration-300 cursor-pointer hover:shadow-2xl hover:shadow-primary/20 transform hover:-translate-y-2"
                           onClick={() => setSelectedImage(image)}>
@@ -237,8 +256,8 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
-            <CarouselNext className="hidden md:flex -right-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
+            <CarouselPrevious className="-left-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
+            <CarouselNext className="-right-4 hover:bg-primary hover:text-primary-foreground transition-colors" />
           </Carousel>
         </div>
       </section>
