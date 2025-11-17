@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, ArrowLeft, ArrowUp, MessageCircle } from "lucide-react";
+import { FileText, Search, Scale, HandshakeIcon, CheckCircle2, CandlestickChart, Bitcoin, DollarSign, HeartCrack, Home, ShieldAlert, LineChart, MoreHorizontal, ArrowLeft, ArrowUp, MessageCircle, ExternalLink } from "lucide-react";
 import { articles } from "@/data/articles";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 import logo from "@/assets/fundfixers-new-logo.png";
 import withdrawal1 from "@/assets/gallery/withdrawal-1.jpg";
 import withdrawal2 from "@/assets/gallery/withdrawal-2.jpg";
@@ -39,6 +41,29 @@ const Index = () => {
   ];
 
   const [selectedArticle, setSelectedArticle] = useState<typeof articles[0] | null>(null);
+  const [cryptoNews, setCryptoNews] = useState<any[]>([]);
+  const [newsLoading, setNewsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCryptoNews();
+  }, []);
+
+  const fetchCryptoNews = async () => {
+    try {
+      setNewsLoading(true);
+      const { data, error } = await supabase.functions.invoke('fetch-crypto-news');
+      
+      if (error) throw error;
+      
+      if (data?.articles) {
+        setCryptoNews(data.articles);
+      }
+    } catch (error) {
+      console.error('Error fetching crypto news:', error);
+    } finally {
+      setNewsLoading(false);
+    }
+  };
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -230,46 +255,75 @@ const Index = () => {
       <section id="articles" className="py-20 px-4 bg-gradient-to-b from-background to-secondary/10">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
-            أخبار وتنبيهات
+            أخبار العملات الرقمية
           </h2>
           <p className="text-center text-muted-foreground text-lg mb-12 max-w-3xl mx-auto">
-            آخر التحديثات والتنبيهات الهامة حول عمليات الاحتيال
+            آخر التحديثات والأخبار في عالم العملات الرقمية والبلوكتشين
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {articles.filter(a => a.category === "أخبار وتنبيهات").slice(0, 3).map((article) => {
-              const Icon = article.icon;
-              return (
-                <Card 
-                  key={article.id}
-                  className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card cursor-pointer"
-                  onClick={() => setSelectedArticle(article)}
-                >
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
-                        <Icon className="w-6 h-6 text-primary" />
-                      </div>
-                      <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
-                        {article.category}
-                      </span>
-                    </div>
-                    <h3 className="font-bold text-xl text-card-foreground text-right leading-relaxed line-clamp-3">
-                      {article.title}
-                    </h3>
-                    <p className="text-muted-foreground text-right text-sm line-clamp-2">
-                      {article.description}
-                    </p>
-                    <button 
-                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-semibold text-sm"
-                    >
-                      اقرأ المزيد <ArrowLeft className="w-4 h-4 mr-2" />
-                    </button>
-                  </div>
+          {newsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => (
+                <Card key={i} className="p-6 space-y-4">
+                  <Skeleton className="h-48 w-full" />
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-10 w-full" />
                 </Card>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cryptoNews.slice(0, 3).map((news, index) => (
+                  <Card 
+                    key={index}
+                    className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card"
+                  >
+                    {news.image && (
+                      <div className="w-full h-48 overflow-hidden">
+                        <img 
+                          src={news.image} 
+                          alt={news.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6 space-y-4">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>بواسطة {news.author}</span>
+                        <span>{news.timeAgo}</span>
+                      </div>
+                      <h3 className="font-bold text-lg text-card-foreground text-right leading-relaxed line-clamp-2">
+                        {news.title}
+                      </h3>
+                      <p className="text-muted-foreground text-right text-sm line-clamp-3">
+                        {news.description}
+                      </p>
+                      <a 
+                        href={news.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="outline" className="w-full gap-2">
+                          اقرأ المزيد
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                      </a>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              
+              <div className="text-center mt-12">
+                <Link to="/news">
+                  <Button size="lg" className="gap-2 px-8 py-6 text-lg">
+                    المزيد من الأخبار <ArrowLeft className="w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
