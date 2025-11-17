@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, ArrowUp, MessageCircle, X, Loader2 } from "lucide-react";
+import { Home, ArrowUp, MessageCircle, ArrowLeft, Newspaper } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-new-logo.png";
@@ -76,10 +76,46 @@ const News = () => {
     setArticleContent("");
   };
 
+  const renderMarkdown = (content: string) => {
+    return content.split('\n').map((line, idx) => {
+      line = line.trim();
+      
+      if (!line) return null;
+      
+      // Headers
+      if (line.startsWith('####')) {
+        return <h4 key={idx} className="text-lg font-bold mt-6 mb-3 text-right">{line.replace(/^####\s*/, '')}</h4>;
+      }
+      if (line.startsWith('###')) {
+        return <h3 key={idx} className="text-xl font-bold mt-6 mb-3 text-right">{line.replace(/^###\s*/, '')}</h3>;
+      }
+      if (line.startsWith('##')) {
+        return <h2 key={idx} className="text-2xl font-bold mt-8 mb-4 text-right">{line.replace(/^##\s*/, '')}</h2>;
+      }
+      if (line.startsWith('#')) {
+        return <h1 key={idx} className="text-3xl font-bold mt-8 mb-4 text-right">{line.replace(/^#\s*/, '')}</h1>;
+      }
+      
+      // Lists
+      if (line.startsWith('* ') || line.startsWith('- ')) {
+        return <li key={idx} className="mr-6 mb-2 text-right">{line.replace(/^[*-]\s*/, '')}</li>;
+      }
+      
+      // Links - remove markdown link syntax
+      line = line.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+      
+      // Bold text
+      line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      
+      // Regular paragraphs
+      return <p key={idx} className="mb-4 leading-relaxed text-right" dangerouslySetInnerHTML={{ __html: line }} />;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background font-cairo">
       {/* Header */}
-      <header className="border-b border-border/30 bg-background sticky top-0 z-50">
+      <header className="border-b border-border/30 bg-background">
         <div className="container max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/">
@@ -102,13 +138,13 @@ const News = () => {
             أخبار العملات الرقمية
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            آخر التحديثات والأخبار في عالم العملات الرقمية والبلوكتشين
+            آخر التحديثات والأخبار في عالم العملات الرقمية والبلوكتشين من Investing.com
           </p>
         </div>
       </section>
 
       {/* News Grid */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-gradient-to-b from-background to-secondary/5">
         <div className="container max-w-7xl mx-auto">
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -126,12 +162,18 @@ const News = () => {
               {news.map((article, index) => (
                 <Card 
                   key={index}
-                  className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card"
+                  className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card cursor-pointer"
+                  onClick={() => fetchArticleContent(article)}
                 >
                   <div className="p-6 space-y-4">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>بواسطة {article.author}</span>
-                      <span>{article.timeAgo}</span>
+                    <div className="flex items-center justify-between">
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                        <Newspaper className="w-6 h-6 text-primary" />
+                      </div>
+                      <div className="flex flex-col items-end text-xs text-muted-foreground">
+                        <span>{article.timeAgo}</span>
+                        <span>بواسطة {article.author}</span>
+                      </div>
                     </div>
                     <h3 className="font-bold text-lg text-card-foreground text-right leading-relaxed line-clamp-2">
                       {article.title}
@@ -139,12 +181,9 @@ const News = () => {
                     <p className="text-muted-foreground text-right text-sm line-clamp-3">
                       {article.description}
                     </p>
-                    <Button 
-                      variant="outline" 
-                      className="w-full"
-                      onClick={() => fetchArticleContent(article)}
-                    >
+                    <Button variant="outline" className="w-full">
                       اقرأ المزيد
+                      <ArrowLeft className="mr-2 h-4 w-4" />
                     </Button>
                   </div>
                 </Card>
@@ -182,35 +221,25 @@ const News = () => {
 
       {/* Article Modal */}
       <Dialog open={!!selectedArticle} onOpenChange={(open) => !open && closeArticle()}>
-        <DialogContent className="max-w-4xl max-h-[90vh] p-0">
-          <DialogHeader className="p-6 pb-4">
-            <DialogTitle className="text-right text-2xl font-bold">
+        <DialogContent className="max-w-5xl max-h-[85vh]">
+          <DialogHeader>
+            <DialogTitle className="text-right text-2xl font-bold leading-relaxed pr-6">
               {selectedArticle?.title}
             </DialogTitle>
-            <div className="flex items-center justify-between text-sm text-muted-foreground pt-2">
+            <div className="flex items-center justify-between text-sm text-muted-foreground pt-2 pr-6">
               <span>{selectedArticle?.timeAgo}</span>
               <span>بواسطة {selectedArticle?.author}</span>
             </div>
           </DialogHeader>
-          <ScrollArea className="max-h-[calc(90vh-120px)] px-6 pb-6">
+          <ScrollArea className="max-h-[calc(85vh-140px)] px-6">
             {loadingContent ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <p className="text-muted-foreground">جاري تحميل المقال...</p>
               </div>
             ) : (
-              <div className="prose prose-lg max-w-none dark:prose-invert text-right" dir="rtl">
-                {articleContent.split('\n').map((paragraph, idx) => {
-                  if (paragraph.startsWith('#')) {
-                    const level = paragraph.match(/^#+/)?.[0].length || 1;
-                    const text = paragraph.replace(/^#+\s*/, '');
-                    const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements;
-                    return <Tag key={idx} className="font-bold mb-4 mt-6">{text}</Tag>;
-                  }
-                  if (paragraph.trim()) {
-                    return <p key={idx} className="mb-4 leading-relaxed">{paragraph}</p>;
-                  }
-                  return null;
-                })}
+              <div className="prose prose-lg max-w-none text-foreground">
+                {renderMarkdown(articleContent)}
               </div>
             )}
           </ScrollArea>
