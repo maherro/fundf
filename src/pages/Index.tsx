@@ -52,18 +52,32 @@ const Index = () => {
   const fetchCryptoNews = async () => {
     try {
       setNewsLoading(true);
-      const { data, error } = await supabase.functions.invoke('fetch-crypto-news');
+      const { data, error } = await supabase
+        .from('crypto_news')
+        .select('*')
+        .order('published_at', { ascending: false })
+        .limit(5);
       
       if (error) throw error;
       
-      if (data?.articles) {
-        setCryptoNews(data.articles);
-      }
+      setCryptoNews(data || []);
     } catch (error) {
       console.error('Error fetching crypto news:', error);
     } finally {
       setNewsLoading(false);
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    
+    if (diffHours < 1) return 'منذ دقائق';
+    if (diffHours < 24) return `منذ ${diffHours} ساعة`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `منذ ${diffDays} ${diffDays === 1 ? 'يوم' : 'أيام'}`;
   };
 
   const [formData, setFormData] = useState({
@@ -273,7 +287,7 @@ const Index = () => {
 
           {newsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(3)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <Card key={i} className="p-6 space-y-4">
                   <Skeleton className="h-48 w-full" />
                   <Skeleton className="h-6 w-3/4" />
@@ -285,35 +299,36 @@ const Index = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {cryptoNews.slice(0, 3).map((news, index) => (
+                {cryptoNews.map((news) => (
                   <Card 
-                    key={index}
+                    key={news.id}
                     className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card"
                   >
-                    {news.image && (
-                      <div className="w-full h-48 overflow-hidden">
+                    {news.image_url && (
+                      <div className="relative h-48 overflow-hidden bg-muted">
                         <img 
-                          src={news.image} 
+                          src={news.image_url} 
                           alt={news.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       </div>
                     )}
                     <div className="p-6 space-y-4">
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>بواسطة {news.author}</span>
-                        <span>{news.timeAgo}</span>
+                        <span>{formatDate(news.published_at)}</span>
                       </div>
                       <h3 className="font-bold text-lg text-card-foreground text-right leading-relaxed line-clamp-2">
                         {news.title}
                       </h3>
-                      <p className="text-muted-foreground text-right text-sm line-clamp-3">
+                      <p className="text-muted-foreground text-right text-sm line-clamp-3 leading-relaxed">
                         {news.description}
                       </p>
                       <a 
-                        href={news.url}
+                        href={news.original_url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="block"
                       >
                         <Button variant="outline" className="w-full gap-2">
                           اقرأ المزيد
@@ -323,6 +338,15 @@ const Index = () => {
                     </div>
                   </Card>
                 ))}
+              </div>
+              
+              <div className="text-center mt-8">
+                <Link to="/news">
+                  <Button variant="default" size="lg" className="gap-2">
+                    عرض المزيد من الأخبار
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
             </>
           )}
