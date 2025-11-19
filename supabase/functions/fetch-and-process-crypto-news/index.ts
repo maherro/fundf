@@ -25,44 +25,79 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Fetching cryptocurrency news RSS feed...');
+    console.log('Fetching cryptocurrency news from Investing.com...');
     
-    // Fetch RSS feed
-    const response = await fetch('https://sa.investing.com/rss/news_301.rss');
-    const rssText = await response.text();
+    // Fetch news using Jina AI reader
+    const response = await fetch('https://r.jina.ai/https://sa.investing.com/news/cryptocurrency-news', {
+      headers: { 
+        'Accept': 'application/json',
+        'X-With-Generated-Alt': 'true'
+      }
+    });
     
-    // Parse RSS feed
+    if (!response.ok) {
+      throw new Error(`Failed to fetch news: ${response.status}`);
+    }
+    
+    const jsonData = await response.json();
     const articles: NewsArticle[] = [];
-    const itemMatches = rssText.matchAll(/<item>([\s\S]*?)<\/item>/g);
     
-    for (const match of itemMatches) {
-      if (articles.length >= 10) break;
+    // Parse articles from JSON data
+    if (jsonData.data?.content) {
+      const lines = jsonData.data.content.split('\n');
       
-      const itemContent = match[1];
-      
-      const titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
-      const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
-      const descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
-      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
-      
-      if (titleMatch && linkMatch && descMatch) {
-        const title = titleMatch[1].trim();
-        const url = linkMatch[1].trim();
-        let description = descMatch[1].trim();
+      for (let i = 0; i < lines.length && articles.length < 10; i++) {
+        const line = lines[i].trim();
         
-        // Remove HTML tags from description
-        description = description.replace(/<[^>]*>/g, '');
+        // Look for article links in markdown format
+        const linkMatch = line.match(/\[([^\]]+)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/[^\)]+)\)/);
         
-        // Limit description length
-        if (description.length > 150) {
-          description = description.substring(0, 150) + '...';
+        if (linkMatch) {
+          const title = linkMatch[1].trim();
+          const url = linkMatch[2].trim();
+          
+          if (!title || title.length < 10) continue;
+          
+          // Get description from next few lines
+          let description = '';
+          for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
+            const potentialDesc = lines[j].trim();
+            if (potentialDesc && 
+                !potentialDesc.startsWith('*') && 
+                !potentialDesc.startsWith('[') &&
+                !potentialDesc.startsWith('#') &&
+                !potentialDesc.includes('بواسطة')) {
+              description = potentialDesc;
+              break;
+            }
+          }
+          
+          // Get time from metadata
+          let timeAgo = 'مؤخراً';
+          for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
+            const timeLine = lines[j].trim();
+            if (timeLine.includes('•')) {
+              const timeMatch = timeLine.match(/•\s*(.+)$/);
+              if (timeMatch) {
+                timeAgo = timeMatch[1].trim();
+                break;
+              }
+            }
+          }
+          
+          if (description && description.length > 20) {
+            articles.push({ 
+              title, 
+              url, 
+              description: description.substring(0, 150),
+              timeAgo 
+            });
+          }
         }
-        
-        const timeAgo = pubDateMatch ? pubDateMatch[1] : 'مؤخراً';
-        
-        articles.push({ title, url, description, timeAgo });
       }
     }
+    
+    console.log(`Found ${articles.length} articles`);
 
     console.log(`Found ${articles.length} articles, processing...`);
 
