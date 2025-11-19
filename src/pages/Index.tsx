@@ -243,14 +243,13 @@ const Index = () => {
             opts={{
               align: "start",
               loop: false,
-              slidesToScroll: 1,
             }}
-            className="w-full max-w-6xl mx-auto"
+            className="w-full"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
+            <CarouselContent>
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
-                  <div className="p-1">
+                <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <div className="p-2">
                     <Card 
                       className="overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:scale-105"
                       onClick={() => setSelectedGalleryImage(image)}
@@ -259,7 +258,7 @@ const Index = () => {
                         <img 
                           src={image} 
                           alt={`سحب معاملة ${index + 1}`}
-                          className="w-full h-full object-cover aspect-[3/4]"
+                          className="w-full h-48 object-cover"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                           <Search className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -270,8 +269,8 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="-left-12 hidden md:flex" />
-            <CarouselNext className="-right-12 hidden md:flex" />
+            <CarouselPrevious />
+            <CarouselNext />
           </Carousel>
         </div>
       </section>
