@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, ArrowUp, MessageCircle, RefreshCw, Newspaper, ExternalLink } from "lucide-react";
+import { Home, ArrowUp, MessageCircle, Newspaper, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import logo from "@/assets/fundfixers-new-logo.png";
@@ -20,22 +20,9 @@ interface CryptoNews {
 const News = () => {
   const [news, setNews] = useState<CryptoNews[]>([]);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [autoImported, setAutoImported] = useState(false);
 
   useEffect(() => {
-    const initializeNews = async () => {
-      const count = await fetchNews();
-      
-      // Auto-import news once if we have less than 5 articles
-      if (count < 5 && !autoImported) {
-        console.log(`Only ${count} articles found, auto-importing...`);
-        setAutoImported(true);
-        await handleRefresh();
-      }
-    };
-    
-    initializeNews();
+    fetchNews();
   }, []);
 
   const fetchNews = async () => {
@@ -50,34 +37,11 @@ const News = () => {
       if (error) throw error;
       
       setNews(data || []);
-      return data?.length || 0;
     } catch (error) {
       console.error('Error fetching news:', error);
       toast.error('فشل تحميل الأخبار');
-      return 0;
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleRefresh = async () => {
-    try {
-      setRefreshing(true);
-      toast.info('جاري تحديث الأخبار... قد يستغرق هذا بضع دقائق');
-      
-      const { data, error } = await supabase.functions.invoke('fetch-and-process-crypto-news');
-      
-      if (error) throw error;
-      
-      if (data?.success) {
-        toast.success(`تم تحديث ${data.processed} خبر بنجاح`);
-        await fetchNews();
-      }
-    } catch (error) {
-      console.error('Error refreshing news:', error);
-      toast.error('فشل تحديث الأخبار');
-    } finally {
-      setRefreshing(false);
     }
   };
 
@@ -150,11 +114,7 @@ const News = () => {
           ) : news.length === 0 ? (
             <div className="text-center py-12">
               <Newspaper className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground text-lg mb-4">لا توجد أخبار متاحة حالياً</p>
-              <Button onClick={handleRefresh} disabled={refreshing}>
-                <RefreshCw className={`w-4 h-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
-                تحميل الأخبار
-              </Button>
+              <p className="text-muted-foreground text-lg">لا توجد أخبار متاحة حالياً</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
