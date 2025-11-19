@@ -243,8 +243,9 @@ const Index = () => {
             opts={{
               align: "start",
               loop: false,
+              slidesToScroll: 1,
             }}
-            className="w-full"
+            className="w-full max-w-6xl mx-auto"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {galleryImages.map((image, index) => (
@@ -269,8 +270,8 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
+            <CarouselPrevious className="-left-12 hidden md:flex" />
+            <CarouselNext className="-right-12 hidden md:flex" />
           </Carousel>
         </div>
       </section>
