@@ -25,100 +25,52 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Fetching cryptocurrency news from Investing.com...');
+    console.log('Fetching cryptocurrency news RSS feed...');
     
-    // Fetch news using Jina AI reader
-    const response = await fetch('https://r.jina.ai/https://sa.investing.com/news/cryptocurrency-news', {
-      headers: { 'Accept': 'text/plain' }
-    });
-    const markdown = await response.text();
+    // Fetch RSS feed
+    const response = await fetch('https://sa.investing.com/rss/news_301.rss');
+    const rssText = await response.text();
     
-    // Parse articles from markdown
+    // Parse RSS feed
     const articles: NewsArticle[] = [];
-    const lines = markdown.split('\n');
+    const itemMatches = rssText.matchAll(/<item>([\s\S]*?)<\/item>/g);
     
-    for (let i = 0; i < lines.length && articles.length < 10; i++) {
-      const line = lines[i].trim();
-      const linkMatch = line.match(/^\*\s+\[(.*?)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/article-\d+)\)/);
+    for (const match of itemMatches) {
+      if (articles.length >= 10) break;
       
-      if (linkMatch) {
-        const title = linkMatch[1].trim();
-        const url = linkMatch[2].trim();
+      const itemContent = match[1];
+      
+      const titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
+      const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
+      const descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
+      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
+      
+      if (titleMatch && linkMatch && descMatch) {
+        const title = titleMatch[1].trim();
+        const url = linkMatch[1].trim();
+        let description = descMatch[1].trim();
         
-        if (!title || title.length < 10) continue;
+        // Remove HTML tags from description
+        description = description.replace(/<[^>]*>/g, '');
         
-        let description = '';
-        for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
-          const potentialDesc = lines[j].trim();
-          if (potentialDesc && !potentialDesc.startsWith('*') && !potentialDesc.includes('بواسطة') && !potentialDesc.startsWith('#')) {
-            description = potentialDesc.replace(/^[A-Za-z]+\s*-\s*/, '');
-            break;
-          }
+        // Limit description length
+        if (description.length > 150) {
+          description = description.substring(0, 150) + '...';
         }
         
-        let timeAgo = 'مؤخراً';
-        for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
-          const potentialAuthor = lines[j].trim();
-          const authorMatch = potentialAuthor.match(/^\*\s*بواسطة.*?•(.*?)$/);
-          if (authorMatch) {
-            timeAgo = authorMatch[1].trim();
-            break;
-          }
-        }
+        const timeAgo = pubDateMatch ? pubDateMatch[1] : 'مؤخراً';
         
-        if (description) {
-          articles.push({ title, url, description: description.substring(0, 150), timeAgo });
-        }
+        articles.push({ title, url, description, timeAgo });
       }
     }
 
     console.log(`Found ${articles.length} articles, processing...`);
 
-    // Process each article: rewrite content and generate image
+    // Process each article: generate image only
     const processedArticles = [];
     for (const article of articles) {
       try {
-        // Rewrite title and description in formal Arabic
-        console.log(`Rewriting article: ${article.title.substring(0, 50)}...`);
-        const rewriteResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [
-              {
-                role: 'system',
-                content: 'أنت كاتب أخبار محترف في مجال العملات الرقمية. أعد كتابة الأخبار بالعربية الفصحى بأسلوب احترافي وموضوعي، دون ذكر أي مصادر خارجية. اجعل النص يبدو وكأنه محتوى أصلي ينتمي لموقعنا.'
-              },
-              {
-                role: 'user',
-                content: `أعد كتابة هذا الخبر بالعربية الفصحى (العنوان والوصف):
-
-العنوان: ${article.title}
-الوصف: ${article.description}
-
-اكتب العنوان في سطر واحد، ثم الوصف في 20-25 كلمة. استخدم هذا التنسيق:
-العنوان: [العنوان المعاد كتابته]
-الوصف: [الوصف المعاد كتابته]`
-              }
-            ]
-          })
-        });
-
-        const rewriteData = await rewriteResponse.json();
-        const rewrittenText = rewriteData.choices[0].message.content;
-        
-        // Parse rewritten title and description
-        const titleMatch = rewrittenText.match(/العنوان:\s*(.+)/);
-        const descMatch = rewrittenText.match(/الوصف:\s*(.+)/);
-        
-        const newTitle = titleMatch ? titleMatch[1].trim() : article.title;
-        const newDescription = descMatch ? descMatch[1].trim() : article.description;
-
-        console.log(`Generating image for: ${newTitle.substring(0, 50)}...`);
+        console.log(`Generating image for: ${article.title.substring(0, 50)}...`);
         
         // Generate AI image
         const imageResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
@@ -132,7 +84,7 @@ serve(async (req) => {
             messages: [
               {
                 role: 'user',
-                content: `Generate a modern, minimalistic cryptocurrency-themed image for this news article. Style: dark mode friendly, professional, abstract crypto symbols, blockchain network visualization. Theme: ${newTitle.substring(0, 100)}`
+                content: `Generate a modern, minimalistic cryptocurrency-themed image for this news article. Style: dark mode friendly, professional, abstract crypto symbols, blockchain network visualization. Theme: ${article.title.substring(0, 100)}`
               }
             ],
             modalities: ['image', 'text']
@@ -143,22 +95,22 @@ serve(async (req) => {
         const imageUrl = imageData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
 
         if (!imageUrl) {
-          console.error('Failed to generate image for article:', newTitle);
+          console.error('Failed to generate image for article:', article.title);
           continue;
         }
 
-        // Parse time and convert to timestamp
-        const publishedAt = new Date().toISOString();
+        // Parse publication date
+        const publishedAt = new Date(article.timeAgo).toISOString();
 
         processedArticles.push({
-          title: newTitle,
-          description: newDescription,
+          title: article.title,
+          description: article.description,
           original_url: article.url,
           image_url: imageUrl,
           published_at: publishedAt
         });
 
-        console.log(`Successfully processed: ${newTitle.substring(0, 50)}...`);
+        console.log(`Successfully processed: ${article.title.substring(0, 50)}...`);
         
       } catch (error) {
         console.error('Error processing article:', error);
