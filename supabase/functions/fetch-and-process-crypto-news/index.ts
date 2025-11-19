@@ -30,74 +30,82 @@ serve(async (req) => {
     // Fetch news using Jina AI reader
     const response = await fetch('https://r.jina.ai/https://sa.investing.com/news/cryptocurrency-news', {
       headers: { 
-        'Accept': 'application/json',
-        'X-With-Generated-Alt': 'true'
+        'Accept': 'text/plain'
       }
     });
     
     if (!response.ok) {
+      console.error(`Failed to fetch news: ${response.status}`);
       throw new Error(`Failed to fetch news: ${response.status}`);
     }
     
-    const jsonData = await response.json();
-    const articles: NewsArticle[] = [];
+    const markdown = await response.text();
+    console.log('Received markdown length:', markdown.length);
+    console.log('First 500 chars:', markdown.substring(0, 500));
     
-    // Parse articles from JSON data
-    if (jsonData.data?.content) {
-      const lines = jsonData.data.content.split('\n');
+    const articles: NewsArticle[] = [];
+    const lines = markdown.split('\n');
+    console.log('Total lines:', lines.length);
+    
+    for (let i = 0; i < lines.length && articles.length < 10; i++) {
+      const line = lines[i].trim();
       
-      for (let i = 0; i < lines.length && articles.length < 10; i++) {
-        const line = lines[i].trim();
+      // Look for article links in markdown format
+      const linkMatch = line.match(/\[([^\]]+)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/[^\)]+)\)/);
+      
+      if (linkMatch) {
+        console.log('Found article link:', linkMatch[1].substring(0, 50));
+        const title = linkMatch[1].trim();
+        const url = linkMatch[2].trim();
         
-        // Look for article links in markdown format
-        const linkMatch = line.match(/\[([^\]]+)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/[^\)]+)\)/);
+        if (!title || title.length < 10) {
+          console.log('Title too short, skipping');
+          continue;
+        }
         
-        if (linkMatch) {
-          const title = linkMatch[1].trim();
-          const url = linkMatch[2].trim();
-          
-          if (!title || title.length < 10) continue;
-          
-          // Get description from next few lines
-          let description = '';
-          for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
-            const potentialDesc = lines[j].trim();
-            if (potentialDesc && 
-                !potentialDesc.startsWith('*') && 
-                !potentialDesc.startsWith('[') &&
-                !potentialDesc.startsWith('#') &&
-                !potentialDesc.includes('بواسطة')) {
-              description = potentialDesc;
+        // Get description from next few lines
+        let description = '';
+        for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
+          const potentialDesc = lines[j].trim();
+          if (potentialDesc && 
+              !potentialDesc.startsWith('*') && 
+              !potentialDesc.startsWith('[') &&
+              !potentialDesc.startsWith('#') &&
+              !potentialDesc.includes('بواسطة')) {
+            description = potentialDesc;
+            console.log('Found description:', description.substring(0, 50));
+            break;
+          }
+        }
+        
+        // Get time from metadata
+        let timeAgo = 'مؤخراً';
+        for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
+          const timeLine = lines[j].trim();
+          if (timeLine.includes('•')) {
+            const timeMatch = timeLine.match(/•\s*(.+)$/);
+            if (timeMatch) {
+              timeAgo = timeMatch[1].trim();
               break;
             }
           }
-          
-          // Get time from metadata
-          let timeAgo = 'مؤخراً';
-          for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
-            const timeLine = lines[j].trim();
-            if (timeLine.includes('•')) {
-              const timeMatch = timeLine.match(/•\s*(.+)$/);
-              if (timeMatch) {
-                timeAgo = timeMatch[1].trim();
-                break;
-              }
-            }
-          }
-          
-          if (description && description.length > 20) {
-            articles.push({ 
-              title, 
-              url, 
-              description: description.substring(0, 150),
-              timeAgo 
-            });
-          }
+        }
+        
+        if (description && description.length > 20) {
+          articles.push({ 
+            title, 
+            url, 
+            description: description.substring(0, 150),
+            timeAgo 
+          });
+          console.log(`Added article ${articles.length}:`, title.substring(0, 50));
+        } else {
+          console.log('Description too short or missing');
         }
       }
     }
     
-    console.log(`Found ${articles.length} articles`);
+    console.log(`Found ${articles.length} articles total`);
 
     console.log(`Found ${articles.length} articles, processing...`);
 
