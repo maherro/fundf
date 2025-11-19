@@ -25,87 +25,54 @@ serve(async (req) => {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    console.log('Fetching cryptocurrency news from Investing.com...');
-    
-    // Fetch news using Jina AI reader
-    const response = await fetch('https://r.jina.ai/https://sa.investing.com/news/cryptocurrency-news', {
-      headers: { 
-        'Accept': 'text/plain'
-      }
-    });
-    
+    console.log('Fetching cryptocurrency news RSS feed...');
+
+    // Fetch RSS feed for cryptocurrency news
+    const response = await fetch('https://sa.investing.com/rss/news_301.rss');
     if (!response.ok) {
-      console.error(`Failed to fetch news: ${response.status}`);
-      throw new Error(`Failed to fetch news: ${response.status}`);
+      console.error(`Failed to fetch RSS: ${response.status}`);
+      throw new Error(`Failed to fetch RSS: ${response.status}`);
     }
-    
-    const markdown = await response.text();
-    console.log('Received markdown length:', markdown.length);
-    console.log('First 500 chars:', markdown.substring(0, 500));
-    
+
+    const rssText = await response.text();
+    console.log('Received RSS length:', rssText.length);
+
     const articles: NewsArticle[] = [];
-    const lines = markdown.split('\n');
-    console.log('Total lines:', lines.length);
-    
-    for (let i = 0; i < lines.length && articles.length < 10; i++) {
-      const line = lines[i].trim();
-      
-      // Look for article links in markdown format
-      const linkMatch = line.match(/\[([^\]]+)\]\((https:\/\/sa\.investing\.com\/news\/cryptocurrency-news\/[^\)]+)\)/);
-      
-      if (linkMatch) {
-        console.log('Found article link:', linkMatch[1].substring(0, 50));
-        const title = linkMatch[1].trim();
-        const url = linkMatch[2].trim();
-        
-        if (!title || title.length < 10) {
-          console.log('Title too short, skipping');
-          continue;
-        }
-        
-        // Get description from next few lines
-        let description = '';
-        for (let j = i + 1; j < i + 5 && j < lines.length; j++) {
-          const potentialDesc = lines[j].trim();
-          if (potentialDesc && 
-              !potentialDesc.startsWith('*') && 
-              !potentialDesc.startsWith('[') &&
-              !potentialDesc.startsWith('#') &&
-              !potentialDesc.includes('بواسطة')) {
-            description = potentialDesc;
-            console.log('Found description:', description.substring(0, 50));
-            break;
-          }
-        }
-        
-        // Get time from metadata
-        let timeAgo = 'مؤخراً';
-        for (let j = i + 1; j < i + 10 && j < lines.length; j++) {
-          const timeLine = lines[j].trim();
-          if (timeLine.includes('•')) {
-            const timeMatch = timeLine.match(/•\s*(.+)$/);
-            if (timeMatch) {
-              timeAgo = timeMatch[1].trim();
-              break;
-            }
-          }
-        }
-        
-        if (description && description.length > 20) {
-          articles.push({ 
-            title, 
-            url, 
-            description: description.substring(0, 150),
-            timeAgo 
-          });
-          console.log(`Added article ${articles.length}:`, title.substring(0, 50));
-        } else {
-          console.log('Description too short or missing');
-        }
+    const itemMatches = rssText.matchAll(/<item>([\s\S]*?)<\/item>/g);
+
+    for (const match of itemMatches) {
+      if (articles.length >= 5) break; // Only take latest 5
+
+      const itemContent = match[1];
+
+      const titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
+      const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
+      const descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
+      const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
+
+      if (!titleMatch || !linkMatch) continue;
+
+      const title = titleMatch[1].trim();
+      const url = linkMatch[1].trim();
+      let description = descMatch ? descMatch[1].trim() : '';
+
+      // Remove HTML tags from description
+      description = description.replace(/<[^>]*>/g, '');
+
+      // Use a short excerpt
+      if (description.length > 220) {
+        description = description.substring(0, 220) + '...';
+      }
+
+      const timeAgo = pubDateMatch ? pubDateMatch[1].trim() : new Date().toISOString();
+
+      if (title && description) {
+        articles.push({ title, url, description, timeAgo });
+        console.log('Parsed article:', title.substring(0, 80));
       }
     }
-    
-    console.log(`Found ${articles.length} articles total`);
+
+    console.log(`Parsed ${articles.length} articles from RSS`);
 
     console.log(`Found ${articles.length} articles, processing...`);
 
