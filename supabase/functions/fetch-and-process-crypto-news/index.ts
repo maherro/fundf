@@ -100,7 +100,7 @@ serve(async (req) => {
             messages: [
               {
                 role: 'user',
-                content: `Generate a modern, minimalistic cryptocurrency-themed image for this news article. Style: dark mode friendly, professional, abstract crypto symbols, blockchain network visualization. Theme: ${article.title.substring(0, 100)}`
+                content: `Generate a modern, minimalistic cryptocurrency news image. NO TEXT OR WORDS should appear in the image. Style: professional photo-realistic, dark gradient background, abstract crypto symbols (Bitcoin, blockchain network lines, digital coins), subtle glow effects, clean composition. Theme related to: ${article.title.substring(0, 100)}. Remember: absolutely NO text, numbers, or letters in the image.`
               }
             ],
             modalities: ['image', 'text']
