@@ -21,9 +21,21 @@ const News = () => {
   const [news, setNews] = useState<CryptoNews[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [autoImported, setAutoImported] = useState(false);
 
   useEffect(() => {
-    fetchNews();
+    const initializeNews = async () => {
+      const count = await fetchNews();
+      
+      // Auto-import news once if we have less than 5 articles
+      if (count < 5 && !autoImported) {
+        console.log(`Only ${count} articles found, auto-importing...`);
+        setAutoImported(true);
+        await handleRefresh();
+      }
+    };
+    
+    initializeNews();
   }, []);
 
   const fetchNews = async () => {
@@ -38,9 +50,11 @@ const News = () => {
       if (error) throw error;
       
       setNews(data || []);
+      return data?.length || 0;
     } catch (error) {
       console.error('Error fetching news:', error);
       toast.error('فشل تحميل الأخبار');
+      return 0;
     } finally {
       setLoading(false);
     }
@@ -93,15 +107,6 @@ const News = () => {
               <img src={logo} alt="FundFixers Logo" className="h-[65px] w-auto" />
             </Link>
             <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                className="gap-2"
-                onClick={handleRefresh}
-                disabled={refreshing}
-              >
-                <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-                تحديث
-              </Button>
               <Link to="/">
                 <Button variant="outline" className="gap-2">
                   <Home className="w-4 h-4" />

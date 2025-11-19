@@ -36,28 +36,54 @@ serve(async (req) => {
 
     const rssText = await response.text();
     console.log('Received RSS length:', rssText.length);
+    console.log('First 1000 chars of RSS:', rssText.substring(0, 1000));
 
     const articles: NewsArticle[] = [];
-    const itemMatches = rssText.matchAll(/<item>([\s\S]*?)<\/item>/g);
+    
+    // Try multiple parsing strategies
+    // Strategy 1: CDATA format
+    let itemMatches = Array.from(rssText.matchAll(/<item>([\s\S]*?)<\/item>/g));
+    
+    console.log(`Found ${itemMatches.length} items in RSS`);
 
     for (const match of itemMatches) {
-      if (articles.length >= 5) break; // Only take latest 5
+      if (articles.length >= 5) break;
 
       const itemContent = match[1];
+      console.log('Processing item, content length:', itemContent.length);
 
-      const titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
-      const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
-      const descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
+      // Try CDATA format first
+      let titleMatch = itemContent.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/);
+      let linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
+      let descMatch = itemContent.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/);
+      
+      // If CDATA didn't work, try plain text
+      if (!titleMatch) {
+        titleMatch = itemContent.match(/<title>(.*?)<\/title>/);
+      }
+      if (!descMatch) {
+        descMatch = itemContent.match(/<description>(.*?)<\/description>/);
+      }
+
       const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
 
-      if (!titleMatch || !linkMatch) continue;
+      if (!titleMatch || !linkMatch) {
+        console.log('Missing title or link, skipping');
+        continue;
+      }
 
-      const title = titleMatch[1].trim();
+      let title = titleMatch[1].trim();
       const url = linkMatch[1].trim();
       let description = descMatch ? descMatch[1].trim() : '';
 
+      console.log('Found article:', title.substring(0, 60));
+
+      // Decode HTML entities
+      title = title.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+      description = description.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+      
       // Remove HTML tags from description
-      description = description.replace(/<[^>]*>/g, '');
+      description = description.replace(/<[^>]*>/g, '').trim();
 
       // Use a short excerpt
       if (description.length > 220) {
@@ -66,9 +92,11 @@ serve(async (req) => {
 
       const timeAgo = pubDateMatch ? pubDateMatch[1].trim() : new Date().toISOString();
 
-      if (title && description) {
+      if (title && description && description.length > 20) {
         articles.push({ title, url, description, timeAgo });
-        console.log('Parsed article:', title.substring(0, 80));
+        console.log(`Article ${articles.length} added successfully`);
+      } else {
+        console.log('Skipping - title or description too short');
       }
     }
 
