@@ -299,7 +299,7 @@ const Index = () => {
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {cryptoNews.map((news) => (
+                {cryptoNews.slice(0, 3).map((news) => (
                   <Card 
                     key={news.id}
                     className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card"
