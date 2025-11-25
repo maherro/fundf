@@ -282,7 +282,7 @@ const Index = () => {
                 },
                 {
                   name: "عبدالله المطيري",
-                  country: "الكويت",
+                  country: "السعودية",
                   amount: "8,900$",
                   days: 8,
                   date: "05/12/2025",
