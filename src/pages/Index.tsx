@@ -265,7 +265,7 @@ const Index = () => {
                   image: ahmedImg
                 },
                 {
-                  name: "فاطمة الغامدي",
+                  name: "فاطمة الكعبة",
                   country: "السعودية",
                   amount: "28,000$",
                   days: 16,
