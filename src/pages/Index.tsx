@@ -274,7 +274,7 @@ const Index = () => {
                 },
                 {
                   name: "خالد العلي",
-                  country: "قطر",
+                  country: "السعودية",
                   amount: "11,200$",
                   days: 12,
                   date: "04/08/2025",
