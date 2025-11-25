@@ -20,10 +20,10 @@ import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
 import withdrawal7 from "@/assets/gallery/withdrawal-7.jpg";
 import withdrawal8 from "@/assets/gallery/withdrawal-8.jpg";
 import withdrawal9 from "@/assets/gallery/withdrawal-9.jpg";
-import kimberlyImg from "@/assets/testimonials/kimberly.jpg";
-import peterImg from "@/assets/testimonials/peter.jpg";
-import brunoImg from "@/assets/testimonials/bruno.jpg";
-import vasiliyImg from "@/assets/testimonials/vasiliy.jpg";
+import ahmedImg from "@/assets/testimonials/ahmed.jpg";
+import fatimaImg from "@/assets/testimonials/fatima.jpg";
+import khalidImg from "@/assets/testimonials/khalid.jpg";
+import abdullahImg from "@/assets/testimonials/abdullah.jpg";
 import {
   Carousel,
   CarouselContent,
@@ -257,36 +257,36 @@ const Index = () => {
             <CarouselContent className="-ml-2 md:-ml-4">
               {[
                 {
-                  name: "Kimberly Dewy",
-                  country: "كندا",
-                  amount: "9000$",
-                  days: 11,
-                  date: "05/21/2025",
-                  image: kimberlyImg
+                  name: "أحمد السعيد",
+                  country: "الإمارات",
+                  amount: "15,400$",
+                  days: 9,
+                  date: "03/15/2025",
+                  image: ahmedImg
                 },
                 {
-                  name: "Peter Rowen",
-                  country: "النرويج",
-                  amount: "26 000$",
-                  days: 18,
-                  date: "01/08/2025",
-                  image: peterImg
+                  name: "فاطمة الغامدي",
+                  country: "السعودية",
+                  amount: "28,000$",
+                  days: 16,
+                  date: "02/22/2025",
+                  image: fatimaImg
                 },
                 {
-                  name: "Bruno Sordi",
-                  country: "الولايات المتحدة",
-                  amount: "12 400$",
-                  days: 14,
-                  date: "07/13/2025",
-                  image: brunoImg
+                  name: "خالد الكواري",
+                  country: "قطر",
+                  amount: "11,200$",
+                  days: 12,
+                  date: "04/08/2025",
+                  image: khalidImg
                 },
                 {
-                  name: "Vasiliy Lehman",
-                  country: "إسرائيل",
-                  amount: "6 200$",
-                  days: 7,
-                  date: "08/29/2025",
-                  image: vasiliyImg
+                  name: "عبدالله المطيري",
+                  country: "الكويت",
+                  amount: "8,900$",
+                  days: 8,
+                  date: "05/12/2025",
+                  image: abdullahImg
                 }
               ].map((testimonial, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
