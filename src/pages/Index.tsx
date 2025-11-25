@@ -266,7 +266,7 @@ const Index = () => {
                 },
                 {
                   name: "فاطمة الكعبة",
-                  country: "السعودية",
+                  country: "قطر",
                   amount: "28,000$",
                   days: 16,
                   date: "02/22/2025",
