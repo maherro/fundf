@@ -232,6 +232,118 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Success Stories Section */}
+      <section className="py-20 px-4 bg-background">
+        <div className="container max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
+            قصص نجاح حقيقية
+          </h2>
+          <p className="text-center text-muted-foreground text-lg mb-12 max-w-3xl mx-auto">
+            عملاء استعادوا أموالهم بمساعدتنا
+          </p>
+
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {[
+                {
+                  name: "Kimberly Dewy",
+                  country: "Canada",
+                  amount: "9000$",
+                  days: 11,
+                  date: "05/21/2025",
+                  image: withdrawal1
+                },
+                {
+                  name: "Peter Rowen",
+                  country: "Norway",
+                  amount: "26 000$",
+                  days: 18,
+                  date: "01/08/2025",
+                  image: withdrawal2
+                },
+                {
+                  name: "Bruno Sordi",
+                  country: "USA CO",
+                  amount: "12 400$",
+                  days: 14,
+                  date: "07/13/2025",
+                  image: withdrawal3
+                },
+                {
+                  name: "Vasiliy Lehman",
+                  country: "Israel",
+                  amount: "6 200$",
+                  days: 7,
+                  date: "08/29/2025",
+                  image: withdrawal4
+                }
+              ].map((testimonial, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-2">
+                    <Card className="p-6 space-y-4 bg-card hover:shadow-xl transition-all duration-300">
+                      <div className="flex items-start gap-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden bg-muted flex-shrink-0">
+                          <img 
+                            src={testimonial.image} 
+                            alt={testimonial.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 text-right">
+                          <h3 className="font-bold text-lg text-card-foreground mb-1">
+                            {testimonial.name}
+                          </h3>
+                          <p className="text-sm text-primary flex items-center justify-end gap-1">
+                            <span>{testimonial.country}</span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 pt-4 border-t border-border/30">
+                        <div className="flex justify-between items-center">
+                          <span className="text-2xl font-bold text-primary">
+                            {testimonial.amount}
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            مبلغ الاسترجاع
+                          </span>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <span className="text-xl font-semibold text-card-foreground">
+                            {testimonial.days}
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            الأيام المستغرقة
+                          </span>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-card-foreground">
+                            {testimonial.date}
+                          </span>
+                          <span className="text-sm text-muted-foreground">
+                            تاريخ الاسترجاع
+                          </span>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
+        </div>
+      </section>
+
       {/* Gallery Slider Section */}
       <section id="gallery" className="py-20 px-4 bg-secondary/20">
         <div className="container max-w-7xl mx-auto">
