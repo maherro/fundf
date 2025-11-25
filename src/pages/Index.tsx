@@ -713,7 +713,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-xl font-bold text-foreground">الإجراءات القانونية</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  نبدأ بالإجراءات القانونية الدولية ضد الشركة
+                  نشرع باتخاذ الإجراءات القانونية الدولية اللازمة ضد الشركة أو الفرد المسؤول عن عملية الاحتيال
                 </p>
               </div>
 
