@@ -20,6 +20,10 @@ import withdrawal6 from "@/assets/gallery/withdrawal-6.jpg";
 import withdrawal7 from "@/assets/gallery/withdrawal-7.jpg";
 import withdrawal8 from "@/assets/gallery/withdrawal-8.jpg";
 import withdrawal9 from "@/assets/gallery/withdrawal-9.jpg";
+import kimberlyImg from "@/assets/testimonials/kimberly.jpg";
+import peterImg from "@/assets/testimonials/peter.jpg";
+import brunoImg from "@/assets/testimonials/bruno.jpg";
+import vasiliyImg from "@/assets/testimonials/vasiliy.jpg";
 import {
   Carousel,
   CarouselContent,
@@ -233,7 +237,7 @@ const Index = () => {
       </section>
 
       {/* Success Stories Section */}
-      <section className="py-20 px-4 bg-background">
+      <section className="py-20 px-4 bg-background" dir="rtl">
         <div className="container max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
             قصص نجاح حقيقية
@@ -246,49 +250,50 @@ const Index = () => {
             opts={{
               align: "start",
               loop: true,
+              direction: "rtl",
             }}
             className="w-full"
           >
-            <CarouselContent>
+            <CarouselContent className="-ml-2 md:-ml-4">
               {[
                 {
                   name: "Kimberly Dewy",
-                  country: "Canada",
+                  country: "كندا",
                   amount: "9000$",
                   days: 11,
                   date: "05/21/2025",
-                  image: withdrawal1
+                  image: kimberlyImg
                 },
                 {
                   name: "Peter Rowen",
-                  country: "Norway",
+                  country: "النرويج",
                   amount: "26 000$",
                   days: 18,
                   date: "01/08/2025",
-                  image: withdrawal2
+                  image: peterImg
                 },
                 {
                   name: "Bruno Sordi",
-                  country: "USA CO",
+                  country: "الولايات المتحدة",
                   amount: "12 400$",
                   days: 14,
                   date: "07/13/2025",
-                  image: withdrawal3
+                  image: brunoImg
                 },
                 {
                   name: "Vasiliy Lehman",
-                  country: "Israel",
+                  country: "إسرائيل",
                   amount: "6 200$",
                   days: 7,
                   date: "08/29/2025",
-                  image: withdrawal4
+                  image: vasiliyImg
                 }
               ].map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
                   <div className="p-2">
                     <Card className="p-6 space-y-4 bg-card hover:shadow-xl transition-all duration-300">
-                      <div className="flex items-start gap-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden bg-muted flex-shrink-0">
+                      <div className="flex items-start gap-4 flex-row-reverse">
+                        <div className="w-20 h-20 rounded-full overflow-hidden bg-muted flex-shrink-0 border-2 border-primary/20">
                           <img 
                             src={testimonial.image} 
                             alt={testimonial.name}
@@ -306,30 +311,30 @@ const Index = () => {
                       </div>
 
                       <div className="space-y-3 pt-4 border-t border-border/30">
-                        <div className="flex justify-between items-center">
-                          <span className="text-2xl font-bold text-primary">
-                            {testimonial.amount}
-                          </span>
+                        <div className="flex justify-between items-center flex-row-reverse">
                           <span className="text-sm text-muted-foreground">
                             مبلغ الاسترجاع
                           </span>
+                          <span className="text-2xl font-bold text-primary">
+                            {testimonial.amount}
+                          </span>
                         </div>
 
-                        <div className="flex justify-between items-center">
-                          <span className="text-xl font-semibold text-card-foreground">
-                            {testimonial.days}
-                          </span>
+                        <div className="flex justify-between items-center flex-row-reverse">
                           <span className="text-sm text-muted-foreground">
                             الأيام المستغرقة
                           </span>
+                          <span className="text-xl font-semibold text-card-foreground">
+                            {testimonial.days}
+                          </span>
                         </div>
 
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-card-foreground">
-                            {testimonial.date}
-                          </span>
+                        <div className="flex justify-between items-center flex-row-reverse">
                           <span className="text-sm text-muted-foreground">
                             تاريخ الاسترجاع
+                          </span>
+                          <span className="text-sm text-card-foreground">
+                            {testimonial.date}
                           </span>
                         </div>
                       </div>
