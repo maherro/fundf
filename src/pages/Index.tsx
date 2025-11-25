@@ -489,13 +489,13 @@ const Index = () => {
               </div>
             </Card>
 
-            {/* Other Scams */}
+            {/* Trading with Broker */}
             <Card className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group bg-card">
               <div className="flex flex-col items-center text-center space-y-4">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <MoreHorizontal className="w-8 h-8 text-primary" />
+                  <HandshakeIcon className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="font-bold text-card-foreground text-lg">أنواع أخرى</h3>
+                <h3 className="font-bold text-card-foreground text-lg">التداول مع وسيط</h3>
               </div>
             </Card>
           </div>
