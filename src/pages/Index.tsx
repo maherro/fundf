@@ -273,7 +273,7 @@ const Index = () => {
                   image: fatimaImg
                 },
                 {
-                  name: "خالد الكواري",
+                  name: "خالد العلي",
                   country: "قطر",
                   amount: "11,200$",
                   days: 12,
