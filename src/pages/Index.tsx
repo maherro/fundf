@@ -343,8 +343,8 @@ const Index = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
+            <CarouselPrevious className="flex -left-2 md:-left-12" />
+            <CarouselNext className="flex -right-2 md:-right-12" />
           </Carousel>
         </div>
       </section>
