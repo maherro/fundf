@@ -359,13 +359,14 @@ const Index = () => {
           <Carousel
             opts={{
               align: "start",
-              loop: false,
+              loop: true,
+              direction: "rtl",
             }}
             className="w-full"
           >
-            <CarouselContent>
+            <CarouselContent className="-ml-2 md:-ml-4">
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="p-2">
                     <Card 
                       className="overflow-hidden cursor-pointer group transition-all duration-300 hover:shadow-xl hover:scale-105"
