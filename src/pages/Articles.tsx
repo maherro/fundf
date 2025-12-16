@@ -238,16 +238,6 @@ const Articles = () => {
         <ArrowUp className="w-5 h-5 group-hover:animate-bounce" />
       </button>
 
-      {/* WhatsApp Button */}
-      <a
-        href="https://wa.me/YOUR_PHONE_NUMBER"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed right-6 bottom-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 flex items-center justify-center group"
-        aria-label="Contact us on WhatsApp"
-      >
-        <MessageCircle className="w-7 h-7 group-hover:animate-pulse" />
-      </a>
     </div>
   );
 };
