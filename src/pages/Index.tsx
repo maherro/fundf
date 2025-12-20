@@ -93,18 +93,35 @@ const Index = () => {
     fraudulentCompany: "",
     description: ""
   });
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("تم إرسال الطلب بنجاح");
-    setFormData({
-      fullName: "",
-      phone: "",
-      country: "",
-      email: "",
-      amount: "",
-      fraudulentCompany: "",
-      description: ""
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      toast.success("تم إرسال الطلب بنجاح! سنتواصل معك قريباً");
+      setFormData({
+        fullName: "",
+        phone: "",
+        country: "",
+        email: "",
+        amount: "",
+        fraudulentCompany: "",
+        description: ""
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error("حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -226,8 +243,12 @@ const Index = () => {
                     <Textarea id="description" name="description" value={formData.description} onChange={handleChange} required className="w-full min-h-[120px] text-right border-input/50 focus:border-primary transition-colors" placeholder="اشرح حالتك بالتفصيل" />
                   </div>
 
-                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                    إرسال الطلب
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-6 shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-70"
+                  >
+                    {isSubmitting ? "جاري الإرسال..." : "إرسال الطلب"}
                   </Button>
                 </form>
               </Card>
