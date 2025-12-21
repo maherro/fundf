@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_submissions: {
+        Row: {
+          amount: string
+          country: string
+          created_at: string
+          description: string
+          email: string
+          fraudulent_company: string
+          full_name: string
+          id: string
+          phone: string
+        }
+        Insert: {
+          amount: string
+          country: string
+          created_at?: string
+          description: string
+          email: string
+          fraudulent_company: string
+          full_name: string
+          id?: string
+          phone: string
+        }
+        Update: {
+          amount?: string
+          country?: string
+          created_at?: string
+          description?: string
+          email?: string
+          fraudulent_company?: string
+          full_name?: string
+          id?: string
+          phone?: string
+        }
+        Relationships: []
+      }
       crypto_news: {
         Row: {
           created_at: string
