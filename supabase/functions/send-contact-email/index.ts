@@ -16,6 +16,7 @@ interface ContactFormRequest {
   amount: string;
   fraudulentCompany: string;
   description: string;
+  problemDate?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -69,6 +70,10 @@ const handler = async (req: Request): Promise<Response> => {
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Fraudulent Company</td>
               <td style="padding: 10px; border: 1px solid #ddd;">${formData.fraudulentCompany}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Problem Date</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">${formData.problemDate || 'Not specified'}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Description</td>
