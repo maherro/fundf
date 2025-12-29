@@ -25,6 +25,8 @@ export type Database = {
           full_name: string
           id: string
           phone: string
+          preferred_contact_day: string | null
+          preferred_contact_time: string | null
           problem_date: string | null
         }
         Insert: {
@@ -37,6 +39,8 @@ export type Database = {
           full_name: string
           id?: string
           phone: string
+          preferred_contact_day?: string | null
+          preferred_contact_time?: string | null
           problem_date?: string | null
         }
         Update: {
@@ -49,6 +53,8 @@ export type Database = {
           full_name?: string
           id?: string
           phone?: string
+          preferred_contact_day?: string | null
+          preferred_contact_time?: string | null
           problem_date?: string | null
         }
         Relationships: []
