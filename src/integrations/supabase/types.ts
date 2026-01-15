@@ -28,6 +28,7 @@ export type Database = {
           preferred_contact_day: string | null
           preferred_contact_time: string | null
           problem_date: string | null
+          source: string | null
         }
         Insert: {
           amount: string
@@ -42,6 +43,7 @@ export type Database = {
           preferred_contact_day?: string | null
           preferred_contact_time?: string | null
           problem_date?: string | null
+          source?: string | null
         }
         Update: {
           amount?: string
@@ -56,6 +58,7 @@ export type Database = {
           preferred_contact_day?: string | null
           preferred_contact_time?: string | null
           problem_date?: string | null
+          source?: string | null
         }
         Relationships: []
       }
